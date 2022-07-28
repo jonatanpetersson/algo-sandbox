@@ -1,0 +1,38 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.game-area {
+    width: 500px;
+    height: 500px;
+    border: 1px gray solid;
+    display: flex;
+    flex-wrap: wrap;
+    box-sizing: unset;
+}
+
+.cell {
+    /* border: 1px gray solid; */
+}
+
+.alive {
+    background-color: black;
+}
+
+.dead {
+    background-color: white;
+}
