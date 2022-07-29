@@ -1,15 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game of life</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="game-area"></div>
-    <script>var exports = {};</script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Conway's Game of Life</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <section class="settings">
+      <h1 class="header">Conway's Game of Life</h1>
+      <p>
+        Visualisation of
+        <a
+          href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life"
+          target="_blank"
+          >Conway's Game of Life</a
+        >. It is a zero-player game, meaning that its evolution is determined by
+        its initial state, which currently is set at random for each cell. There
+        are a few settings below to tinker with.
+      </p>
+      <form action="submit" class="form">
+        <label for="tick-speed">Tick speed (ms)</label>
+        <input type="number" name="tick-speed" id="tick-speed" step="10" />
+        <label for="population-ratio">Initial population ratio (0-1)</label>
+        <input
+          type="number"
+          max="1"
+          min="0"
+          step=".05"
+          name="population-ratio"
+          id="population-ratio"
+        />
+        <input type="submit" value="Set values" />
+      </form>
+      <button class="toggle-game">Play game</button>
+      <button class="reset-game">Reset game</button>
+    </section>
+    <script>
+      let exports = {};
+    </script>
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
