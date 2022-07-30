@@ -3,9 +3,15 @@ import {
   createCellsArray,
   createCellsDict,
   updateCellsState,
-} from "./game-functions";
-import { AchimsP144, AchimsP16, Glider, Weekender } from "./configs";
-import { CellsArray, CellsDict, Config, ConfigSelected } from "./types";
+} from './game-functions';
+import {
+  AchimsP144,
+  AchimsP16,
+  Glider,
+  MaxSpaceFiller189,
+  Weekender,
+} from './configs';
+import { CellsArray, CellsDict, Config, ConfigSelected } from './types';
 
 let rows: number;
 let cols: number;
@@ -34,7 +40,7 @@ function setupUI() {
   rows = gridSize;
   cols = gridSize;
   canvas = initializeCanvas(900, 900);
-  ctx = canvas.getContext("2d")!;
+  ctx = canvas.getContext('2d')!;
   cellDimensions = canvas.width / cols;
   cellsArray = createCellsArray(rows, cols, populationRatio);
   cellsDict = createCellsDict(cellsArray);
@@ -43,27 +49,27 @@ function setupUI() {
   selectElements();
   addEventListeners();
 
-  tickSpeedInput.value = tickSpeed + "";
-  populationRatioInput.value = populationRatio + "";
-  gridSizeInput.value = gridSize + "";
+  tickSpeedInput.value = tickSpeed + '';
+  populationRatioInput.value = populationRatio + '';
+  gridSizeInput.value = gridSize + '';
 }
 
 function selectElements() {
-  toggleButton = document.querySelector(".toggle-button")!;
-  resetButton = document.querySelector(".reset-button")!;
-  configSelect = document.querySelector("#config-select")!;
-  settingsForm = document.querySelector(".form")!;
-  tickSpeedInput = document.querySelector("#tick-speed")!;
-  populationRatioInput = document.querySelector("#population-ratio")!;
-  gridSizeInput = document.querySelector("#grid-size")!;
+  toggleButton = document.querySelector('.toggle-button')!;
+  resetButton = document.querySelector('.reset-button')!;
+  configSelect = document.querySelector('#config-select')!;
+  settingsForm = document.querySelector('.form')!;
+  tickSpeedInput = document.querySelector('#tick-speed')!;
+  populationRatioInput = document.querySelector('#population-ratio')!;
+  gridSizeInput = document.querySelector('#grid-size')!;
 }
 
 function addEventListeners() {
-  settingsForm.addEventListener("submit", setNewSettings);
-  configSelect.addEventListener("click", loadConfig);
-  toggleButton.addEventListener("click", toggleGame);
-  resetButton.addEventListener("click", resetGame);
-  canvas.addEventListener("click", placeConfig);
+  settingsForm.addEventListener('submit', setNewSettings);
+  configSelect.addEventListener('click', loadConfig);
+  toggleButton.addEventListener('click', toggleGame);
+  resetButton.addEventListener('click', resetGame);
+  canvas.addEventListener('click', placeConfig);
 }
 
 function loadConfig() {
@@ -80,10 +86,13 @@ function loadConfig() {
     case ConfigSelected.Weekender:
       config = Weekender;
       break;
+    case ConfigSelected.MaxSpaceFiller189:
+      config = MaxSpaceFiller189;
+      break;
     default:
       config = undefined;
   }
-  document.body.style.cursor = config ? "crosshair" : "auto";
+  document.body.style.cursor = config ? 'crosshair' : 'auto';
 }
 
 function placeConfig(event: MouseEvent) {
@@ -101,7 +110,7 @@ function placeConfig(event: MouseEvent) {
       const cellsPixelX = cellsX * cellDimensions;
       const cellsPixelY = cellsY * cellDimensions;
       if (!!cell) {
-        ctx.fillStyle = "black";
+        ctx.fillStyle = 'black';
         ctx.fillRect(cellsPixelX, cellsPixelY, cellDimensions, cellDimensions);
         const cellInDict = cellsDict[`x${cellsX}y${cellsY}`];
         if (cellInDict) {
@@ -134,8 +143,8 @@ function setNewSettings(ev: SubmitEvent) {
 }
 
 function initializeCanvas(width: number, height: number): HTMLCanvasElement {
-  const canvas: HTMLCanvasElement = document.createElement("canvas");
-  canvas.classList.add("canvas");
+  const canvas: HTMLCanvasElement = document.createElement('canvas');
+  canvas.classList.add('canvas');
   canvas.width = width;
   canvas.height = height;
   document.body.append(canvas);
@@ -147,10 +156,10 @@ function toggleGame() {
 
   if (gameOn) {
     runGame();
-    toggleButton.textContent = "Paus game";
+    toggleButton.textContent = 'Paus game';
   } else {
     stopGame();
-    toggleButton.textContent = "Start game";
+    toggleButton.textContent = 'Start game';
   }
 }
 
@@ -174,7 +183,7 @@ function stopGame() {
 function resetGame() {
   gameOn = false;
   clearInterval(gameInterval);
-  toggleButton.textContent = "Start game";
+  toggleButton.textContent = 'Start game';
   clearCanvas();
   cellsArray = createCellsArray(rows, cols, populationRatio);
   cellsDict = createCellsDict(cellsArray);
@@ -185,7 +194,7 @@ function drawCells(cellsArray: CellsArray) {
   cellsArray.forEach((cell) => {
     if (cell.alive) {
       const { x, y } = calculateCellPosition(cell, cellDimensions);
-      ctx.fillStyle = "black";
+      ctx.fillStyle = 'black';
       ctx.fillRect(x, y, cellDimensions, cellDimensions);
     }
   });
