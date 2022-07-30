@@ -1,0 +1,50 @@
+.main {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: rgb(177, 199, 221);
+}
+
+.settings {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  left: 10px;
+  z-index: 2;
+  background-color: lightslategrey;
+  height: fit-content;
+  padding: 10px;
+  border-radius: 3px;
+}
+
+.canvas {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+@media screen and (max-width: 1080px) {
+  .main {
+    flex-direction: column;
+  }
+  .settings {
+    left: unset;
+    top: 75px;
+    input,
+    label,
+    button {
+      font-size: 10px;
+    }
+  }
+
+  .settings-header {
+    font-size: 12px;
+  }
+
+  .canvas {
+    right: unset;
+  }
+}

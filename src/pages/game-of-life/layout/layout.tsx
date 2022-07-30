@@ -7,22 +7,28 @@ import {
   createCellsDict,
   updateCellsState,
 } from '../functions';
-import { AchimsP144, AchimsP16, Glider, Weekender } from '../configs';
+import {
+  AchimsP144,
+  AchimsP16,
+  Glider,
+  MaxSpaceFiller189,
+  Weekender,
+} from '../configs';
 import { CellsArray, CellsDict, Config, ConfigSelected } from '../types';
+import Canvas from '../canvas/canvas';
 
-let rows: number;
-let cols: number;
 let canvas: HTMLCanvasElement;
+let canvasSize: number;
 let config: Config | undefined;
 let ctx: CanvasRenderingContext2D;
-let cellDimensions: number;
+let cellSize: number;
 let cellsArray: CellsArray;
 let cellsDict: CellsDict;
 let gameInterval: NodeJS.Timer;
 let gameOn: boolean = false;
 let tickSpeed: number = 150;
 let gridSize: number = 150;
-let populationRatio: number = 0;
+let populationRatio: number = 0.1;
 let toggleButton: HTMLButtonElement;
 let resetButton: HTMLButtonElement;
 let configSelect: HTMLInputElement;
@@ -31,18 +37,30 @@ let tickSpeedInput: HTMLInputElement;
 let populationRatioInput: HTMLInputElement;
 let gridSizeInput: HTMLInputElement;
 
+function resizeCanvas() {
+  const windowSize =
+    window.innerWidth < window.innerHeight
+      ? window.innerWidth
+      : window.innerHeight;
+  cellSize = Math.floor(windowSize / gridSize);
+  canvasSize = cellSize * gridSize;
+  canvas.width = canvasSize;
+  canvas.height = canvasSize;
+}
+
+function reSizeAndDraw() {
+  resizeCanvas();
+  drawCells();
+}
+
 function setupUI() {
-  rows = gridSize;
-  cols = gridSize;
-  canvas = initializeCanvas(900, 900);
-  ctx = canvas.getContext('2d')!;
-  cellDimensions = canvas.width / cols;
-  cellsArray = createCellsArray(rows, cols, populationRatio);
+  cellsArray = createCellsArray(gridSize, populationRatio);
   cellsDict = createCellsDict(cellsArray);
-  drawCells(cellsArray);
 
   selectElements();
   addEventListeners();
+  resizeCanvas();
+  drawCells();
 
   tickSpeedInput.value = tickSpeed + '';
   populationRatioInput.value = populationRatio + '';
@@ -50,13 +68,15 @@ function setupUI() {
 }
 
 function selectElements() {
-  toggleButton = document.querySelector('.toggle-button')!;
-  resetButton = document.querySelector('.reset-button')!;
+  canvas = document.querySelector('.canvas')!;
+  ctx = canvas.getContext('2d')!;
   configSelect = document.querySelector('#config-select')!;
+  gridSizeInput = document.querySelector('#grid-size')!;
+  populationRatioInput = document.querySelector('#population-ratio')!;
+  resetButton = document.querySelector('.reset-button')!;
   settingsForm = document.querySelector('.form')!;
   tickSpeedInput = document.querySelector('#tick-speed')!;
-  populationRatioInput = document.querySelector('#population-ratio')!;
-  gridSizeInput = document.querySelector('#grid-size')!;
+  toggleButton = document.querySelector('.toggle-button')!;
 }
 
 function addEventListeners() {
@@ -65,6 +85,7 @@ function addEventListeners() {
   toggleButton.addEventListener('click', toggleGame);
   resetButton.addEventListener('click', resetGame);
   canvas.addEventListener('click', placeConfig);
+  window.addEventListener('resize', reSizeAndDraw);
 }
 
 function loadConfig() {
@@ -81,6 +102,9 @@ function loadConfig() {
     case ConfigSelected.Weekender:
       config = Weekender;
       break;
+    case ConfigSelected.MaxSpaceFiller189:
+      config = MaxSpaceFiller189;
+      break;
     default:
       config = undefined;
   }
@@ -92,18 +116,18 @@ function placeConfig(event: MouseEvent) {
     return;
   }
   const { x, y } = getClickedCellPosition(canvas, event);
-  const initialCellsX = Math.floor(x / cellDimensions);
-  const initialCellsY = Math.floor(y / cellDimensions);
+  const initialCellsX = Math.floor(x / cellSize);
+  const initialCellsY = Math.floor(y / cellSize);
 
   config.forEach((row, rowY) => {
     row.forEach((cell, colX) => {
       const cellsX = initialCellsX + colX;
       const cellsY = initialCellsY + rowY;
-      const cellsPixelX = cellsX * cellDimensions;
-      const cellsPixelY = cellsY * cellDimensions;
+      const cellsPixelX = cellsX * cellSize;
+      const cellsPixelY = cellsY * cellSize;
       if (!!cell) {
         ctx.fillStyle = 'black';
-        ctx.fillRect(cellsPixelX, cellsPixelY, cellDimensions, cellDimensions);
+        ctx.fillRect(cellsPixelX, cellsPixelY, cellSize, cellSize);
         const cellInDict = cellsDict[`x${cellsX}y${cellsY}`];
         if (cellInDict) {
           cellInDict.alive = !!cell;
@@ -127,18 +151,9 @@ function setNewSettings(ev: SubmitEvent) {
   populationRatio = Number(populationRatioInput.value);
   if (gridSize !== Number(gridSizeInput.value)) {
     gridSize = Number(gridSizeInput.value);
-    cols = gridSize;
-    rows = gridSize;
-    cellDimensions = canvas.width / cols;
+    resizeCanvas();
   }
   resetGame();
-}
-
-function initializeCanvas(width: number, height: number): HTMLCanvasElement {
-  const canvas: HTMLCanvasElement = document.querySelector('.canvas')!;
-  canvas.width = width;
-  canvas.height = height;
-  return canvas;
 }
 
 function toggleGame() {
@@ -162,7 +177,7 @@ function runGame() {
     cellsArray = updatedCellsArray;
     cellsDict = updatedCellsDict;
     clearCanvas();
-    drawCells(cellsArray);
+    drawCells();
   }, tickSpeed);
 }
 
@@ -175,17 +190,19 @@ function resetGame() {
   clearInterval(gameInterval);
   toggleButton.textContent = 'Start game';
   clearCanvas();
-  cellsArray = createCellsArray(rows, cols, populationRatio);
+  cellsArray = createCellsArray(gridSize, populationRatio);
   cellsDict = createCellsDict(cellsArray);
-  drawCells(cellsArray);
+  drawCells();
 }
 
-function drawCells(cellsArray: CellsArray) {
+function drawCells() {
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
   cellsArray.forEach((cell) => {
     if (cell.alive) {
-      const { x, y } = calculateCellPosition(cell, cellDimensions);
+      const { x, y } = calculateCellPosition(cell, cellSize);
       ctx.fillStyle = 'black';
-      ctx.fillRect(x, y, cellDimensions, cellDimensions);
+      ctx.fillRect(x, y, cellSize, cellSize);
     }
   });
 }
@@ -196,16 +213,18 @@ function clearCanvas() {
 
 export interface IAppProps {}
 
-export default function App(props: IAppProps) {
+export function Layout(props: IAppProps) {
   React.useEffect(() => {
     setupUI();
   }, []);
 
   return (
-    <>
+    <main className="main">
+      <Canvas />
+      {/* <canvas className="canvas"></canvas> */}
       <section className="settings">
-        <h1 className="header">Conway's Game of Life</h1>
-        <p>
+        <h1 className="settings-header">Conway's Game of Life</h1>
+        {/* <p>
           Visualisation of{' '}
           <a
             href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life"
@@ -216,7 +235,7 @@ export default function App(props: IAppProps) {
           . It is a zero-player game, meaning that its evolution is determined
           by its initial state, which currently is set at random for each cell.
           There are a few settings below to tinker with.
-        </p>
+        </p> */}
         <button className="toggle-button">Play game</button>
         <button className="reset-button">Reset game</button>
         <h3>Settings</h3>
@@ -257,9 +276,9 @@ export default function App(props: IAppProps) {
           <option value="achims-p16">Archims P16</option>
           <option value="achims-p144">Archims P144</option>
           <option value="weekender">Weekender</option>
+          <option value="max-spacefiller-189">Max SpaceFiller 189</option>
         </select>
       </section>
-      <canvas className="canvas"></canvas>
-    </>
+    </main>
   );
 }

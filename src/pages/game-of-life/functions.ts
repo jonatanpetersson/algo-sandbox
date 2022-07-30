@@ -45,15 +45,14 @@ export function calculateNumberOfAliveNeighbours(
 }
 
 export function createCellsArray(
-  rows: number,
-  cols: number,
+  gridSize: number,
   populationRatio: number
 ): CellsArray {
-  let xLimit = cols;
+  let xLimit = gridSize;
   let x = 0;
   let y = 0;
 
-  const cellsArray = Array(rows * cols)
+  const cellsArray = Array(Math.pow(gridSize, 2))
     .fill({})
     .map((el, idx) => {
       const arrayIdx = idx;

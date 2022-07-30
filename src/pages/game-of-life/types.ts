@@ -14,4 +14,5 @@ export enum ConfigSelected {
   AchimsP16 = 'achims-p16',
   AchimsP144 = 'achims-p144',
   Weekender = 'weekender',
+  MaxSpaceFiller189 = 'max-spacefiller-189',
 }
