@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Conway's Game of Life</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <section class="settings">
+      <h1 class="header">Conway's Game of Life</h1>
+      <p>
+        Visualisation of
+        <a
+          href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life"
+          target="_blank"
+          >Conway's Game of Life</a
+        >. It is a zero-player game, meaning that its evolution is determined by
+        its initial state, which currently is set at random for each cell. There
+        are a few settings below to tinker with.
+      </p>
+      <button class="toggle-button">Play game</button>
+      <button class="reset-button">Reset game</button>
+      <h3>Settings</h3>
+      <form action="submit" class="form">
+        <label for="grid-size">Grid size (for rows and columns)</label>
+        <input type="number" name="grid-size" id="grid-size" step="5" />
+        <label for="tick-speed">Tick speed (ms)</label>
+        <input type="number" name="tick-speed" id="tick-speed" step="10" />
+        <label for="population-ratio">Initial population ratio (0-1)</label>
+        <input
+          type="number"
+          max="1"
+          min="0"
+          step=".05"
+          name="population-ratio"
+          id="population-ratio"
+        />
+        <input class="submit-button" type="submit" value="Save settings" />
+      </form>
+      <label class="config-select-label" for="config-select"
+        >Select and place a config on the canvas</label
+      >
+      <select class="config-select" name="config-select" id="config-select">
+        <option value="" disabled selected hidden>Select configuration</option>
+        <option value="glider">Glider</option>
+        <option value="achims-p16">Archims P16</option>
+        <option value="achims-p144">Archims P144</option>
+        <option value="weekender">Weekender</option>
+      </select>
+    </section>
+    <script>
+      let exports = {};
+    </script>
+    <script src="bundle.js"></script>
+  </body>
+</html>
