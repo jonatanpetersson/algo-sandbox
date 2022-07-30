@@ -1,4 +1,4 @@
-import { Cell, CellsArray, CellsDict } from "./types";
+import { Cell, CellsArray, CellsDict } from './types';
 
 export function calculateCellPosition(
   cell: Cell | { x: number; y: number },
@@ -74,7 +74,7 @@ export function createCellsArray(
 export function createCellsDict(cellsArray: CellsArray): CellsDict {
   const cellsDict: CellsDict = {};
   cellsArray.forEach((c) => {
-    cellsDict[c["position"]] = c;
+    cellsDict[c['position']] = c;
   });
 
   return cellsDict;
