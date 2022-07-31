@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="style.css" />
+      <title>New weld project</title>
+    </head>
+    <body>
+      <div class="root"><!-- prettier-ignore -->
+<header class="main-header">
+  <h1 class="main-header-title">
+    <a class="main-header-title home-link" data-route="home" href="/">
+      ALGO SANDBOX
+    </a>
+  </h1>
+  <nav class="main-header-nav">
+  <ul>
+    <li>
+      <a
+        class="main-header-link game-of-life-link"
+        data-route="game-of-life"
+        href="/game-of-life"
+        >Game of Life</a
+      >
+    </li>
+    <li>
+      <a
+        class="main-header-link text-particle-link"
+        data-route="text-particle"
+        href="/text-particle"
+        >Text Particle Animator</a
+      >
+    </li>
+    <li>
+      <a
+        class="main-header-link maze-path-link"
+        data-route="maze-path"
+        href="/maze-path"
+        >Maze Generator & Path Finder</a
+      >
+    </li>
+  </ul>
+</nav>
+
+  <button class="main-header-about">About</button>
+</header>
+
+<main class="main-content">
+  <div class="home-tab hide-tab">Home</div>
+
+  <div class="game-of-life-tab hide-tab">GoL</div>
+
+  <section class="text-particle-tab hide-tab">
+  <canvas class="text-particle-canvas"></canvas>
+</section>
+
+  <div class="maze-path-tab hide-tab">MazePath</div>
+
+  
+</main>
+<!-- prettier-ignore -->
+<footer class="main-footer"></footer>
+
+</div>
+      <script src="script.js"></script>
+    </body>
+  </html>

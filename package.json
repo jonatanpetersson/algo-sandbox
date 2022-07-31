@@ -1,0 +1,27 @@
+{
+  "name": "algo-sandbox",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon -e js,css,html --ignore dist/ --exec \"npx weld build && nodemon server.js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonatanpetersson/algo-sandbox.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jonatanpetersson/algo-sandbox/issues"
+  },
+  "homepage": "https://github.com/jonatanpetersson/algo-sandbox#readme",
+  "devDependencies": {
+    "express": "^4.18.1",
+    "jp-weld": "^0.2.1",
+    "nodemon": "^2.0.19"
+  }
+}

@@ -1,0 +1,30 @@
+.main-header {
+  height: 9.6rem;
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: #264653;
+
+  color: #e9c46a;
+}
+
+.home-link {
+  all: unset;
+}
+
+.main-header-title {
+  padding: 0 3.2rem;
+  font-size: 3.2rem;
+  font-weight: 300;
+  line-height: 3.2rem;
+}
+
+.main-header-about {
+  all: unset;
+  font-size: 2.4rem;
+  font-weight: 300;
+  padding: 0 3.2rem;
+}

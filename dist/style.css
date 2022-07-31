@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Lato', sans-serif;
+}
+
+html,
+body,
+.root {
+  width: 100%;
+  height: 100%;
+  font-size: 10px;
+}
+
+.root {
+  display: flex;
+  flex-direction: column;
+}
+.main-content {
+  flex: 1;
+}
+
+.hide-tab {
+  display: none;
+}
+.main-footer {
+  height: 9.6rem;
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: #264653;
+}
+.main-header {
+  height: 9.6rem;
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: #264653;
+
+  color: #e9c46a;
+}
+
+.home-link {
+  all: unset;
+}
+
+.main-header-title {
+  padding: 0 3.2rem;
+  font-size: 3.2rem;
+  font-weight: 300;
+  line-height: 3.2rem;
+}
+
+.main-header-about {
+  all: unset;
+  font-size: 2.4rem;
+  font-weight: 300;
+  padding: 0 3.2rem;
+}
+.main-header-nav {
+  flex: 1;
+}
+
+.main-header-nav ul {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4.8rem;
+  list-style-type: none;
+}
+
+.main-header-link {
+  all: unset;
+  font-size: 2.4rem;
+  font-weight: 300;
+}
+
+.active-link {
+}
+.text-particle-tab {
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+}
