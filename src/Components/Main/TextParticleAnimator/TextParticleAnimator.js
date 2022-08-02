@@ -1,4 +1,4 @@
-function InitTextParticleAnimator() {
+function TextParticleAnimator() {
   const contentDiv = document.querySelector('.text-particle-tab');
   const canvas = document.querySelector('.text-particle-canvas');
   const yOffset = canvas.getBoundingClientRect().top;
@@ -6,9 +6,10 @@ function InitTextParticleAnimator() {
   const mouse = { x: null, y: null };
   let Particle = createParticleClass();
 
-  let randomParticlesList;
+  // let randomParticlesList;
+  // let amountOfParticles = 2000;
+
   let particleColor = 'white';
-  let amountOfParticles = 2000;
   let speedCoefficient = 0.05;
 
   let text = 'ABC';
@@ -20,6 +21,7 @@ function InitTextParticleAnimator() {
   drawInitialText();
   initTextParticles();
   animateTextParticles();
+
   // initRandomParticles();
   // animateRandomParticles();
 
@@ -63,13 +65,13 @@ function InitTextParticleAnimator() {
     };
   }
 
-  function initRandomParticles() {
-    randomParticlesList = Array.from(Array(amountOfParticles)).map((p) => {
-      const x = canvas.width * Math.random();
-      const y = canvas.height * Math.random();
-      return new Particle(x, y);
-    });
-  }
+  // function initRandomParticles() {
+  //   randomParticlesList = Array.from(Array(amountOfParticles)).map((p) => {
+  //     const x = canvas.width * Math.random();
+  //     const y = canvas.height * Math.random();
+  //     return new Particle(x, y);
+  //   });
+  // }
 
   function animateTextParticles() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -82,17 +84,19 @@ function InitTextParticleAnimator() {
       textParticlesList[i].draw();
       textParticlesList[i].update();
     }
-    requestAnimationFrame(animateTextParticles);
+    if (currentRoute === 'TextParticleAnimator') {
+      requestAnimationFrame(animateTextParticles);
+    }
   }
 
-  function animateRandomParticles() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (let i = 0; i < randomParticlesList.length; i++) {
-      randomParticlesList[i].draw();
-      randomParticlesList[i].update();
-    }
-    requestAnimationFrame(animateRandomParticles);
-  }
+  // function animateRandomParticles() {
+  //   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  //   for (let i = 0; i < randomParticlesList.length; i++) {
+  //     randomParticlesList[i].draw();
+  //     randomParticlesList[i].update();
+  //   }
+  //   requestAnimationFrame(animateRandomParticles);
+  // }
 
   function drawInitialText() {
     ctx.fillStyle = 'white';

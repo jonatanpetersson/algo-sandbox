@@ -11,33 +11,22 @@
       <div class="root"><!-- prettier-ignore -->
 <header class="main-header">
   <h1 class="main-header-title">
-    <a class="main-header-title home-link" data-route="home" href="/">
+    <a class="main-header-title home-link" data-routelink="Home" onclick="loadRouteComponent(event, 'Home')" href="/">
       ALGO SANDBOX
     </a>
   </h1>
   <nav class="main-header-nav">
   <ul>
     <li>
-      <a
-        class="main-header-link game-of-life-link"
-        data-route="game-of-life"
-        href="/game-of-life"
-        >Game of Life</a
-      >
+      <a class="main-header-link" data-routelink="GameOfLife" onclick="loadRouteComponent(event, 'GameOfLife')">Game of Life</a>
     </li>
     <li>
-      <a
-        class="main-header-link text-particle-link"
-        data-route="text-particle"
-        href="/text-particle"
+      <a class="main-header-link" data-routelink="TextParticleAnimator" onclick="loadRouteComponent(event, 'TextParticleAnimator')"
         >Text Particle Animator</a
       >
     </li>
     <li>
-      <a
-        class="main-header-link maze-path-link"
-        data-route="maze-path"
-        href="/maze-path"
+      <a class="main-header-link" data-routelink="MazePath" onclick="loadRouteComponent(event, 'MazePath')"
         >Maze Generator & Path Finder</a
       >
     </li>
@@ -48,17 +37,11 @@
 </header>
 
 <main class="main-content">
-  <div class="home-tab hide-tab">Home</div>
-
-  <div class="game-of-life-tab hide-tab">GoL</div>
-
-  <section class="text-particle-tab hide-tab">
-  <canvas class="text-particle-canvas"></canvas>
-</section>
-
-  <div class="maze-path-tab hide-tab">MazePath</div>
-
-  
+  <div data-routecomponent="Home" data-routenotmounted style="visibility: hidden;"></div>
+  <div data-routecomponent="GameOfLife" data-routenotmounted style="visibility: hidden;"></div>
+  <div data-routecomponent="TextParticleAnimator" data-routenotmounted style="visibility: hidden;"></div>
+  <div data-routecomponent="MazePath" data-routenotmounted style="visibility: hidden;"></div>
+  <Route component="About" />
 </main>
 <!-- prettier-ignore -->
 <footer class="main-footer"></footer>

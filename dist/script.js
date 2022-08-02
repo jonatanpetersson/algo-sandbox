@@ -1,67 +1,4 @@
-const mainContentNode = document.querySelector('.main-content');
-const onObservation = function (mutationList) {
-  const visibleTab = mutationList.at(-1);
-  if (
-    visibleTab.oldValue?.includes('hide-tab') &&
-    visibleTab.target.className.includes('text-particle-tab')
-  ) {
-    InitTextParticleAnimator();
-  }
-};
-const config = { attributes: true, subtree: true, attributeOldValue: true };
-const observer = new MutationObserver(onObservation);
-observer.observe(mainContentNode, config);
-InitNavigation();
-function InitNavigation() {
-  const select = (s) => document.querySelector(s);
-
-  const homeLink = select('.home-link');
-  const homeTab = select('.home-tab');
-  const gameOfLifeLink = select('.game-of-life-link');
-  const gameOfLifeTab = select('.game-of-life-tab');
-  const textParticleLink = select('.text-particle-link');
-  const textParticleTab = select('.text-particle-tab');
-  const mazePathLink = select('.maze-path-link');
-  const mazePathTab = select('.maze-path-tab');
-
-  const router = {
-    home: {
-      link: homeLink,
-      tab: homeTab,
-    },
-    'game-of-life': {
-      link: gameOfLifeLink,
-      tab: gameOfLifeTab,
-    },
-    'text-particle': {
-      link: textParticleLink,
-      tab: textParticleTab,
-    },
-    'maze-path': {
-      link: mazePathLink,
-      tab: mazePathTab,
-    },
-  };
-
-  let activeTab;
-
-  Object.keys(router).forEach((route) => {
-    router[route].link.addEventListener('click', (ev) => {
-      ev.preventDefault();
-      const route = ev.currentTarget.dataset.route;
-      router[activeTab].tab.classList.add('hide-tab');
-      router[activeTab].link.classList.remove('active-link');
-      router[route].tab.classList.remove('hide-tab');
-      router[route].link.classList.add('active-link');
-      activeTab = route;
-    });
-  });
-
-  activeTab = 'home';
-  router.home.link.classList.add('active-link');
-  router.home.tab.classList.remove('hide-tab');
-}
-function InitTextParticleAnimator() {
+function TextParticleAnimator() {
   const contentDiv = document.querySelector('.text-particle-tab');
   const canvas = document.querySelector('.text-particle-canvas');
   const yOffset = canvas.getBoundingClientRect().top;
@@ -69,9 +6,10 @@ function InitTextParticleAnimator() {
   const mouse = { x: null, y: null };
   let Particle = createParticleClass();
 
-  let randomParticlesList;
+  // let randomParticlesList;
+  // let amountOfParticles = 2000;
+
   let particleColor = 'white';
-  let amountOfParticles = 2000;
   let speedCoefficient = 0.05;
 
   let text = 'ABC';
@@ -83,6 +21,7 @@ function InitTextParticleAnimator() {
   drawInitialText();
   initTextParticles();
   animateTextParticles();
+
   // initRandomParticles();
   // animateRandomParticles();
 
@@ -126,13 +65,13 @@ function InitTextParticleAnimator() {
     };
   }
 
-  function initRandomParticles() {
-    randomParticlesList = Array.from(Array(amountOfParticles)).map((p) => {
-      const x = canvas.width * Math.random();
-      const y = canvas.height * Math.random();
-      return new Particle(x, y);
-    });
-  }
+  // function initRandomParticles() {
+  //   randomParticlesList = Array.from(Array(amountOfParticles)).map((p) => {
+  //     const x = canvas.width * Math.random();
+  //     const y = canvas.height * Math.random();
+  //     return new Particle(x, y);
+  //   });
+  // }
 
   function animateTextParticles() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -145,17 +84,19 @@ function InitTextParticleAnimator() {
       textParticlesList[i].draw();
       textParticlesList[i].update();
     }
-    requestAnimationFrame(animateTextParticles);
+    if (currentRoute === 'TextParticleAnimator') {
+      requestAnimationFrame(animateTextParticles);
+    }
   }
 
-  function animateRandomParticles() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (let i = 0; i < randomParticlesList.length; i++) {
-      randomParticlesList[i].draw();
-      randomParticlesList[i].update();
-    }
-    requestAnimationFrame(animateRandomParticles);
-  }
+  // function animateRandomParticles() {
+  //   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  //   for (let i = 0; i < randomParticlesList.length; i++) {
+  //     randomParticlesList[i].draw();
+  //     randomParticlesList[i].update();
+  //   }
+  //   requestAnimationFrame(animateRandomParticles);
+  // }
 
   function drawInitialText() {
     ctx.fillStyle = 'white';
@@ -183,5 +124,44 @@ function InitTextParticleAnimator() {
         textParticlesList.push(new Particle(x, y));
       }
     }
+  }
+}
+let currentRoute = '';
+
+const routes = {
+  GameOfLife: '<div data-routecomponent="GameOfLife">GoL</div>\r\n',
+  Home: '<div data-routecomponent="Home">Home</div>\r\n',
+  MazePath: '<div data-routecomponent="MazePath">MazePath</div>\r\n',
+  TextParticleAnimator:
+    '<section data-routecomponent="TextParticleAnimator" class="text-particle-tab">\r\n' +
+    '  <canvas class="text-particle-canvas"></canvas>\r\n' +
+    '</section>\r\n',
+};
+function loadRouteComponent(event, component) {
+  event.preventDefault();
+  currentRoute = component;
+  let shouldReload = true;
+  const elements = document.querySelectorAll('[data-routecomponent]');
+  elements.forEach((el) => {
+    const tempWrapper = document.createElement('div');
+    const routeComponent = el.dataset.routecomponent;
+    if (routeComponent === component) {
+      if (el.style.visibility !== 'hidden') {
+        shouldReload = false;
+        return;
+      }
+      tempWrapper.innerHTML = routes[component];
+      const newElement = tempWrapper.firstChild;
+      el.replaceWith(newElement);
+    } else {
+      tempWrapper.innerHTML = `<div data-routecomponent="${routeComponent}" style="visibility: hidden;"></div>`;
+      const newElement = tempWrapper.firstChild;
+      el.replaceWith(newElement);
+    }
+  });
+  // @ts-ignore
+  if (window[component] && shouldReload) {
+    // @ts-ignore
+    window[component]();
   }
 }
