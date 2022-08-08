@@ -17,5 +17,27 @@
   font-weight: 300;
 }
 
+.main-header-link:hover {
+  cursor: pointer;
+}
+
 .active-link {
+  font-weight: 500;
+}
+
+@media only screen and (max-width: 900px) {
+  .main-header-nav ul {
+    flex-direction: column;
+    gap: 0.8rem;
+    padding: 1.6rem 0;
+  }
+  /* .maze-path-settings {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3.2rem 0;
+  }
+  .maze-path-settings div {
+    width: max-content;
+  } */
 }

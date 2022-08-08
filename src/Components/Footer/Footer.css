@@ -7,4 +7,58 @@
   align-items: center;
 
   background-color: #264653;
+
+  color: #2a9d8f;
+  font-size: 1.4rem;
+}
+
+.main-footer-title {
+  padding: 0 3.2rem;
+  font-size: 3.2rem;
+  font-weight: 300;
+  line-height: 3.2rem;
+}
+
+.maze-path-settings {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 1.6rem;
+  padding: 0 3.2rem;
+}
+
+.maze-path-settings div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.maze-path-settings div input {
+  padding: 0.4rem;
+  font-size: 1.4rem;
+  border: none;
+  border-radius: 3px;
+}
+
+.maze-path-settings-submit {
+  background-color: #2a9d8f;
+  color: #fff;
+  padding: 0.8rem !important;
+}
+.maze-path-settings-submit:hover {
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 900px) {
+  .maze-path-settings {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.6rem 0;
+  }
+  .maze-path-settings div {
+    width: max-content;
+  }
 }
