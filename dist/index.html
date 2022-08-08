@@ -46,23 +46,31 @@
 <!-- prettier-ignore -->
 <footer class="main-footer">
   <h2 class="main-footer-title">Settings</h2>
-  <form class="maze-path-settings" action="submit">
-    <div>
-      <label for="grid-size">Grid size (e.g. 5 sets a 5x5 grid)</label>
-      <input type="number" name="grid-size" id="grid-size" />
-    </div>
-    <div>
-      <label for="tick-speed">Tick speed (ms)</label>
-      <input type="number" name="tick-speed" id="tick-speed" step="5" min="0" />
-    </div>
-    <div>
-      <input
-        class="maze-path-settings-submit"
-        type="submit"
-        value="Save settings and run"
-      />
-    </div>
-  </form>
+  <div class="main-footer-inner-wrapper">
+    <form class="maze-path-settings" action="submit">
+      <div>
+        <label for="grid-size">Grid size<br />(5 sets a 5x5 grid)</label>
+        <input type="number" name="grid-size" id="grid-size" />
+      </div>
+      <div>
+        <label for="tick-speed">Tick speed (ms)</label>
+        <input
+          type="number"
+          name="tick-speed"
+          id="tick-speed"
+          step="5"
+          min="0"
+        />
+      </div>
+      <div>
+        <input
+          class="maze-path-settings-submit"
+          type="submit"
+          value="Save settings and run"
+        />
+      </div>
+    </form>
+  </div>
 </footer>
 
 </div>

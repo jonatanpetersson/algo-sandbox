@@ -471,7 +471,21 @@ const routes = {
     '    <a href="https://jp-game-of-life.netlify.app/" target="_blank">here</a>\r\n' +
     '  </p>\r\n' +
     '</div>\r\n',
-  Home: '<div data-routecomponent="Home">Home</div>\r\n',
+  Home: '<div data-routecomponent="Home" class="home-tab">\r\n' +
+    '  <p>\r\n' +
+    "    Hello! I'm Jonatan and this is sort of a playground of mine, dabbling with\r\n" +
+    "    data visualisation and algorithms which I've found fascinating and fun\r\n" +
+    '    recently.\r\n' +
+    '    <br />\r\n' +
+    '    <br />\r\n' +
+    "    In it's current state it works best on desktop, and there are lots still\r\n" +
+    "    under development so don't expect too much.\r\n" +
+    '    <br />\r\n' +
+    '    <br />\r\n' +
+    '    You can find my other development stuff\r\n' +
+    '    <a href="https://jonatanpetersson.com/" target="_blank">here</a>.\r\n' +
+    '  </p>\r\n' +
+    '</div>\r\n',
   MazePath: '<section data-routecomponent="MazePath" class="maze-path-tab">\r\n' +
     '  <canvas class="maze-path-canvas"></canvas>\r\n' +
     '</section>\r\n',
