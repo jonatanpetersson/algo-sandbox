@@ -106,7 +106,7 @@ function TextParticleAnimator() {
 
   function setCanvasSize() {
     canvas.width = contentDiv.clientWidth;
-    canvas.height = contentDiv.clientHeight;
+    canvas.height = contentDiv.clientHeight - 2;
   }
 
   function setMouseCoordinates(ev) {

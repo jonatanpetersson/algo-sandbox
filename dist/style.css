@@ -4,6 +4,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: 'Lato', sans-serif;
+  border: none;
 }
 
 html,
@@ -22,7 +23,7 @@ body,
   flex: 1;
 }
 .main-footer {
-  height: 9.6rem;
+  min-height: 9.6rem;
   width: 100%;
 
   display: flex;
@@ -32,7 +33,7 @@ body,
   background-color: #264653;
 }
 .main-header {
-  height: 9.6rem;
+  min-height: 9.6rem;
   width: 100%;
 
   display: flex;
@@ -81,6 +82,11 @@ body,
 }
 
 .active-link {
+}
+.maze-path-tab {
+  width: 100%;
+  height: 100%;
+  background-color: #e9c46a;
 }
 .text-particle-tab {
   width: 100%;
