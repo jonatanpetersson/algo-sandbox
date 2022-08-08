@@ -1,0 +1,14 @@
+.home-settings {
+  width: fit-content;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 1.6rem;
+  padding: 0 3.2rem;
+}
+
+@media only screen and (max-width: 900px) {
+  .home-settings {
+  }
+}

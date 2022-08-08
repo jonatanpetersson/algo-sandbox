@@ -8,7 +8,8 @@
 
   background-color: #264653;
 
-  color: #2a9d8f;
+  /* color: #2a9d8f; */
+  color: #48cebf;
   font-size: 1.4rem;
 }
 
@@ -25,45 +26,6 @@
   justify-content: center;
 }
 
-.maze-path-settings {
-  width: fit-content;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  justify-content: center;
-  gap: 1.6rem;
-  padding: 0 3.2rem;
-}
-
-.maze-path-settings div {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-  width: 100%;
-}
-
-.maze-path-settings div input {
-  padding: 0.4rem;
-  font-size: 1.4rem;
-  border: none;
-  border-radius: 3px;
-  width: 100%;
-}
-
-.maze-path-settings-submit {
-  background-color: #2a9d8f;
-  color: #fff;
-  padding: 0.8rem !important;
-}
-.maze-path-settings-submit:hover {
-  cursor: pointer;
-}
-
-@media only screen and (max-width: 900px) {
-  .maze-path-settings {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 1.6rem 0;
-  }
+.settings-invisible {
+  display: none !important;
 }

@@ -21,7 +21,7 @@
   "homepage": "https://github.com/jonatanpetersson/algo-sandbox#readme",
   "devDependencies": {
     "express": "^4.18.1",
-    "jp-weld": "^0.2.8",
+    "jp-weld": "^0.2.9",
     "nodemon": "^2.0.19"
   }
 }

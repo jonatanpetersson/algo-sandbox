@@ -1,7 +1,7 @@
-const homeLink = document.querySelector('.home-link');
+// const homeLink = document.querySelector('.home-link');
 
-homeLink.addEventListener('click', () => {
-  links.forEach((link) => {
-    link.classList.remove('active-link');
-  });
-});
+// homeLink.addEventListener('click', () => {
+//   links.forEach((link) => {
+//     link.classList.remove('active-link');
+//   });
+// });

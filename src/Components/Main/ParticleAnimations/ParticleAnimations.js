@@ -1,4 +1,4 @@
-function TextParticleAnimator() {
+function ParticleAnimations() {
   const contentDiv = document.querySelector('.text-particle-tab');
   const canvas = document.querySelector('.text-particle-canvas');
   const yOffset = canvas.getBoundingClientRect().top;
@@ -9,7 +9,7 @@ function TextParticleAnimator() {
   // let randomParticlesList;
   // let amountOfParticles = 2000;
 
-  let particleColor = 'white';
+  let particleColor = '#e9c46a';
   let speedCoefficient = 0.05;
 
   let text = 'ABC';
@@ -84,7 +84,8 @@ function TextParticleAnimator() {
       textParticlesList[i].draw();
       textParticlesList[i].update();
     }
-    if (currentRoute === 'TextParticleAnimator') {
+    console.log(currentRoute);
+    if (currentRoute === 'ParticleAnimations') {
       requestAnimationFrame(animateTextParticles);
     }
   }

@@ -1,11 +1,13 @@
-const homeLink = document.querySelector('.home-link');
+// const homeLink = document.querySelector('.home-link');
 
-homeLink.addEventListener('click', () => {
-  links.forEach((link) => {
-    link.classList.remove('active-link');
-  });
-});
-const links = document.querySelectorAll('.main-header-link');
+// homeLink.addEventListener('click', () => {
+//   links.forEach((link) => {
+//     link.classList.remove('active-link');
+//   });
+// });
+const links = document.querySelectorAll(
+  '.main-header-link, .main-header-title'
+);
 
 links.forEach((link) => {
   link.addEventListener('click', (ev) => {
@@ -13,6 +15,14 @@ links.forEach((link) => {
       link.classList.remove('active-link');
     });
     ev.target.classList.add('active-link');
+    const settings = document.querySelectorAll(`[data-settings]`);
+    settings.forEach((setting) => {
+      if (setting.dataset.settings === ev.target.dataset.routelink) {
+        setting.classList.remove('settings-invisible');
+      } else {
+        setting.classList.add('settings-invisible');
+      }
+    });
   });
 });
 let mazePathGridSize = 5;
@@ -333,7 +343,7 @@ function MazePath() {
     });
   }
 }
-function TextParticleAnimator() {
+function ParticleAnimations() {
   const contentDiv = document.querySelector('.text-particle-tab');
   const canvas = document.querySelector('.text-particle-canvas');
   const yOffset = canvas.getBoundingClientRect().top;
@@ -344,7 +354,7 @@ function TextParticleAnimator() {
   // let randomParticlesList;
   // let amountOfParticles = 2000;
 
-  let particleColor = 'white';
+  let particleColor = '#e9c46a';
   let speedCoefficient = 0.05;
 
   let text = 'ABC';
@@ -419,7 +429,8 @@ function TextParticleAnimator() {
       textParticlesList[i].draw();
       textParticlesList[i].update();
     }
-    if (currentRoute === 'TextParticleAnimator') {
+    console.log(currentRoute);
+    if (currentRoute === 'ParticleAnimations') {
       requestAnimationFrame(animateTextParticles);
     }
   }
@@ -489,7 +500,7 @@ const routes = {
   MazePath: '<section data-routecomponent="MazePath" class="maze-path-tab">\r\n' +
     '  <canvas class="maze-path-canvas"></canvas>\r\n' +
     '</section>\r\n',
-  TextParticleAnimator: '<section data-routecomponent="TextParticleAnimator" class="text-particle-tab">\r\n' +
+  ParticleAnimations: '<section data-routecomponent="ParticleAnimations" class="text-particle-tab">\r\n' +
     '  <canvas class="text-particle-canvas"></canvas>\r\n' +
     '</section>\r\n'
 };
