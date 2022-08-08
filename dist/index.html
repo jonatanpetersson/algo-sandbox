@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <title>New weld project</title>
-  </head>
-  <body>
-    <div class="root">
-      <!-- prettier-ignore -->
-      <header class="main-header">
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="style.css" />
+      <title>New weld project</title>
+    </head>
+    <body>
+      <div class="root"><!-- prettier-ignore -->
+<header class="main-header">
   <h1 class="main-header-title">
     <a class="main-header-title home-link" data-routelink="Home" onclick="loadRouteComponent(event, 'Home')" href="/">
       ALGO SANDBOX
@@ -28,7 +27,7 @@
     </li>
     <li>
       <a class="main-header-link" data-routelink="MazePath" onclick="loadRouteComponent(event, 'MazePath')"
-        >Maze Generation & Pathfinding</a
+        >Maze Generator & Path Finder</a
       >
     </li>
   </ul>
@@ -37,47 +36,61 @@
   <!-- <button class="main-header-about">About</button> -->
 </header>
 
-      <main class="main-content">
-        <div data-routecomponent="Home" class="home-tab">
-          <p>
-            Hello! I'm Jonatan and this is sort of a playground of mine,
-            dabbling with data visualisation and algorithms which I've found
-            fascinating and fun recently.
-            <br />
-            <br />
-            In it's current state it works best on desktop, and there are lots
-            still under development so don't expect too much.
-            <br />
-            <br />
-            You can find my other development stuff
-            <a href="https://jonatanpetersson.com/" target="_blank">here</a>.
-          </p>
-        </div>
+<main class="main-content">
+  <div data-routecomponent="Home" class="home-tab">
+  <p>
+    Hello! I'm Jonatan and this is sort of a playground of mine, dabbling with
+    data visualisation and algorithms which I've found fascinating and fun
+    recently.
+    <br />
+    <br />
+    In it's current state it works best on desktop, and there are lots still
+    under development so don't expect too much.
+    <br />
+    <br />
+    You can find my other development stuff
+    <a href="https://jonatanpetersson.com/" target="_blank">here</a>.
+  </p>
+</div>
 
-        <div
-          data-routecomponent="GameOfLife"
-          data-routenotmounted
-          style="visibility: hidden"
-        ></div>
-        <div
-          data-routecomponent="ParticleAnimations"
-          data-routenotmounted
-          style="visibility: hidden"
-        ></div>
-        <div
-          data-routecomponent="MazePath"
-          data-routenotmounted
-          style="visibility: hidden"
-        ></div>
-        <Route component="About" />
-      </main>
-      <!-- prettier-ignore -->
-      <footer class="main-footer">
+  <div data-routecomponent="GameOfLife" data-routenotmounted style="visibility: hidden;"></div>
+  <div data-routecomponent="ParticleAnimations" data-routenotmounted style="visibility: hidden;"></div>
+  <div data-routecomponent="MazePath" data-routenotmounted style="visibility: hidden;"></div>
+  <Route component="About" />
+</main>
+<!-- prettier-ignore -->
+<footer class="main-footer">
   <h2 class="main-footer-title">Settings</h2>
   <div class="main-footer-inner-wrapper">
     <div class="home-settings" data-settings="Home">
   <p>Here you will find settings to adjust on each project.</p>
 </div>
+
+    <form
+  class="game-of-life-settings settings-invisible"
+  action="submit"
+  data-settings="GameOfLife"
+>
+  <div>
+    <label for="particle-colour">Particle colour</label>
+    <input type="text" name="particle-colour" id="particle-colour" />
+  </div>
+  <div>
+    <label for="grid-size">Grid size<br />(5 sets a 5x5 grid)</label>
+    <input type="number" name="grid-size" id="grid-size" />
+  </div>
+  <div>
+    <label for="tick-speed">Tick speed (ms)</label>
+    <input type="number" name="tick-speed" id="tick-speed" step="5" min="0" />
+  </div>
+  <div>
+    <input
+      class="game-of-life-settings-submit"
+      type="submit"
+      value="Save settings and run"
+    />
+  </div>
+</form>
 
     <form
   class="maze-path-settings settings-invisible"
@@ -103,7 +116,8 @@
 
   </div>
 </footer>
-    </div>
-    <script src="script.js"></script>
-  </body>
-</html>
+
+</div>
+      <script src="script.js"></script>
+    </body>
+  </html>

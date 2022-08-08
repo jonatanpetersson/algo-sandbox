@@ -343,10 +343,12 @@ function MazePath() {
     });
   }
 }
+let particleAnimationsParticleColour = '#e9c46a';
+
 function ParticleAnimations() {
   const contentDiv = document.querySelector('.text-particle-tab');
   const canvas = document.querySelector('.text-particle-canvas');
-  const yOffset = canvas.getBoundingClientRect().top;
+  let offset = getOffset();
   const ctx = canvas.getContext('2d');
   const mouse = { x: null, y: null };
   let Particle = createParticleClass();
@@ -354,14 +356,21 @@ function ParticleAnimations() {
   // let randomParticlesList;
   // let amountOfParticles = 2000;
 
-  let particleColor = '#e9c46a';
+  let particleColour = '#e9c46a';
   let speedCoefficient = 0.05;
 
   let text = 'ABC';
+  let textWidth;
   let textParticlesList = [];
+
+  function getOffset() {
+    const { top, left } = canvas.getBoundingClientRect();
+    return { top, left };
+  }
 
   setCanvasSize();
   canvas.addEventListener('mousemove', setMouseCoordinates);
+  window.addEventListener('resize', setCanvasSize);
 
   drawInitialText();
   initTextParticles();
@@ -373,16 +382,15 @@ function ParticleAnimations() {
   function createParticleClass() {
     return class Particle {
       constructor(x, y) {
-        this.x = 8 * x + 100;
-        this.y = 8 * y - 120;
-        this.initialX = this.x;
-        this.initialY = this.y;
-        this.radius = 3;
+        this.originalX = x;
+        this.originalY = y;
+        this.setNewCoordinates(x, y);
+        this.radius = 2;
         this.weight = Math.floor(Math.random() * 3) + 1;
-        this.distanceLimit = 150;
+        this.distanceLimit = canvas.width / 10;
       }
       draw() {
-        ctx.fillStyle = particleColor;
+        ctx.fillStyle = particleColour;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
         ctx.fill();
@@ -407,6 +415,12 @@ function ParticleAnimations() {
           this.y -= speedCoefficient * returnForce * idy;
         }
       }
+      setNewCoordinates() {
+        this.x = this.originalX * (canvas.width / textWidth);
+        this.y = this.originalY * (canvas.height / textWidth);
+        this.initialX = this.x;
+        this.initialY = this.y;
+      }
     };
   }
 
@@ -429,7 +443,6 @@ function ParticleAnimations() {
       textParticlesList[i].draw();
       textParticlesList[i].update();
     }
-    console.log(currentRoute);
     if (currentRoute === 'ParticleAnimations') {
       requestAnimationFrame(animateTextParticles);
     }
@@ -445,24 +458,36 @@ function ParticleAnimations() {
   // }
 
   function drawInitialText() {
+    const fontSize = Math.floor(canvas.height * 0.1);
+    const font = 'Verdana';
     ctx.fillStyle = 'white';
-    ctx.font = '100px Verdana';
-    ctx.fillText(text, 0, 100);
+    ctx.font = fontSize + 'px ' + font;
+    textWidth = Math.ceil(ctx.measureText(text).width);
+    ctx.fillText(text, 0, fontSize);
   }
 
   function setCanvasSize() {
-    canvas.width = contentDiv.clientWidth;
-    canvas.height = contentDiv.clientHeight - 2;
+    offset = getOffset();
+    const { clientWidth, clientHeight } = contentDiv;
+    canvas.width = canvas.height =
+      clientWidth <= clientHeight ? clientWidth : clientHeight;
+    if (textParticlesList.length) {
+      for (let i = 0; i < textParticlesList.length; i++) {
+        textParticlesList[i].setNewCoordinates();
+      }
+    }
   }
 
   function setMouseCoordinates(ev) {
-    mouse.x = ev.x;
-    mouse.y = ev.y - yOffset;
+    offset = getOffset();
+    mouse.x = ev.x - offset.left;
+    mouse.y = ev.y - offset.top;
   }
 
   function initTextParticles() {
-    const rowLength = 250;
-    const imageDataList = ctx.getImageData(0, 0, rowLength, 250).data;
+    console.log(textWidth);
+    const rowLength = textWidth;
+    const imageDataList = ctx.getImageData(0, 0, rowLength, rowLength).data;
     for (let i = 0; i < imageDataList.length; i++) {
       if ((i % 4 === 0) & (imageDataList[i - 1] > 122)) {
         const y = Math.floor((i / 4 - 1) / rowLength);
