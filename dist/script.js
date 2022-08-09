@@ -52,12 +52,14 @@ function MazePath() {
   const ctx = canvas.getContext('2d');
   let Cell = createCell();
   let MazeDigger = createMazeDigger();
+  let AStar = createAStar();
   let currentPath = [];
   let nodeTree = [];
   let gridSize = mazePathGridSize;
   let digAll = true;
   let digSpeed = mazePathDigSpeed;
   let digger;
+  let mazeFinished = false;
   setCanvasSize();
   let cellSize = {
     width: canvas.width / gridSize,
@@ -67,6 +69,7 @@ function MazePath() {
     const { x, y } = getCellPosition(i, gridSize);
     return new Cell(x, y, cellSize);
   });
+  let aStar = new AStar(0, 0);
 
   animate();
   dig(0, 0);
@@ -85,6 +88,9 @@ function MazePath() {
   }
 
   function addNextNodeAsChildOnCurrentNode(currentNode, nextNode) {
+    if (!currentNode.id) {
+      currentNode.id = nodeId(currentNode.x, currentNode.y);
+    }
     const updatedNextNode = {
       ...nextNode,
       id: nodeId(nextNode.x, nextNode.y),
@@ -108,11 +114,19 @@ function MazePath() {
     });
   }
 
+  let callAStar = true;
+
   function animate() {
     ctx.fillStyle = '#264653';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    // grid.forEach((cell) => cell.draw());
     drawConnections(nodeTree);
+    if (mazeFinished) {
+      if (callAStar) {
+        aStar.next();
+        callAStar = false;
+      }
+      aStar.draw();
+    }
     const id = requestAnimationFrame(animate);
     if (mazePathCancel) {
       cancelAnimationFrame(id);
@@ -141,6 +155,205 @@ function MazePath() {
     };
   }
 
+  function createAStar() {
+    return class AStar {
+      constructor(x, y) {
+        this.exit = { x: gridSize - 1, y: gridSize - 1 };
+        this.exitId = nodeId(this.exit.x, this.exit.y);
+        this.x = x;
+        this.y = y;
+        this.g = 0;
+        this.h = this.getH(this.x, this.y);
+        this.f = this.getF(this.g, this.h);
+        this.id = nodeId(this.x, this.y);
+        this.currentPath = [
+          {
+            x,
+            y,
+            g: this.g,
+            h: this.h,
+            f: this.f,
+            id: this.id,
+          },
+        ];
+        this.visitedCells = { [this.currentPath[0].id]: true };
+        this.neighbours;
+        this.nextCell;
+      }
+
+      draw() {
+        for (let i = 0; i < this.currentPath.length; i++) {
+          if (this.currentPath[i + 1]) {
+            const { width, height } = cellSize;
+            const { x: startX, y: startY } = this.currentPath[i];
+            const { x: endX, y: endY } = this.currentPath[i + 1];
+            // if (endX && endY) {
+            let connectedWidth = width;
+            let connectedHeight = height;
+            let newStartX = startX <= endX ? startX : endX;
+            let newStartY = startY <= endY ? startY : endY;
+
+            if (Math.abs(startX - endX) > 0) {
+              connectedWidth *= 2;
+            }
+            if (Math.abs(startY - endY) > 0) {
+              connectedHeight *= 2;
+            }
+
+            ctx.fillStyle = '#48cebf';
+            ctx.fillRect(
+              newStartX * width + 2,
+              newStartY * height + 2,
+              connectedWidth - 4,
+              connectedHeight - 4
+            );
+            // }
+          }
+        }
+      }
+
+      next() {
+        if (this.exitId === this.id) {
+          return;
+        }
+        this.getPossibleNeighbours();
+        if (this.neighbours.length) {
+          this.addCostToNeighbours();
+          this.selectNextCell();
+          this.goToNextCell();
+          setTimeout(() => {
+            this.next();
+          }, digSpeed);
+        } else {
+          this.backtrack();
+        }
+      }
+
+      findNeighbours(id, nodes) {
+        nodes.forEach((node) => {
+          if (node.id === id) {
+            this.neighbours = node.children.map((c) => {
+              const { children, ...nodeWithoutChildern } = c;
+              return nodeWithoutChildern;
+            });
+            return;
+          } else {
+            if (node.children.length) {
+              this.findNeighbours(id, node.children);
+            }
+          }
+        });
+      }
+
+      getPossibleNeighbours() {
+        this.neighbours = [];
+        this.findNeighbours(nodeId(this.x, this.y), nodeTree);
+        if (this.neighbours.length) {
+          this.neighbours = this.neighbours.filter(
+            (n) => !this.visitedCells[n.id]
+          );
+        }
+        // const cellNeighbours = getCell(this.x, this.y).neighbours;
+
+        // let possibleNeighbours = [];
+        // Object.values(cellNeighbours).forEach((neighbour) => {
+        //   if (neighbour) {
+        //     const cell = getCell(neighbour.x, neighbour.y);
+        //     if (!cell.visited) {
+        //       possibleNeighbours = [...possibleNeighbours, neighbour];
+        //     }
+        //   }
+        // });
+        // if (this..length) {
+        //   this.neighbours = possibleNeighbours;
+        //   return true;
+        // } else {
+        //   return false;
+        // }
+      }
+
+      addCostToNeighbours() {
+        this.neighbours = this.neighbours.map((neighbour) => {
+          const { x, y } = neighbour;
+          const h = this.getH(x, y);
+          const g = this.getG(x, y);
+          const f = this.getF(g, h);
+          return { ...neighbour, f, g, h };
+        });
+      }
+
+      selectNextCell() {
+        // if (!this.neighbours.length) {
+        //   this.nextCell = undefined;
+        //   return;
+        // }
+        if (this.neighbours.length === 1) {
+          this.nextCell = this.neighbours[0];
+          return;
+        }
+        this.currentCell;
+        const lowestFValue = this.neighbours.reduce((a, b) =>
+          a.f <= b.f ? a.f : b.f
+        );
+        const selectableCells = this.neighbours.filter(
+          (n) => n.f === lowestFValue
+        );
+        if (selectableCells.length === 1) {
+          this.nextCell = selectableCells[0];
+        } else {
+          const selectedIndex = Math.floor(
+            Math.random() * selectableCells.length
+          );
+          this.nextCell = selectableCells[selectedIndex];
+        }
+      }
+
+      goToNextCell() {
+        this.currentPath = [...this.currentPath, this.nextCell];
+        const { x, y, f, g, h, id } = this.nextCell;
+        this.visitedCells[id] = true;
+        this.setNewPosition(x, y, f, g, h, id);
+        this.nextCell = {};
+      }
+
+      getG(x, y) {
+        const currentG = this.g;
+        const currentH = this.h;
+        const neighbourH = this.getH(x, y);
+        const hDiff = Math.abs(currentH - neighbourH);
+        return currentG + hDiff;
+      }
+      getH(x, y) {
+        const xLength = this.exit.x - x;
+        const yLength = this.exit.y - y;
+        return Math.sqrt(xLength * xLength + yLength * yLength);
+      }
+      getF(g, h) {
+        return g + h;
+      }
+
+      backtrack() {
+        this.currentPath.pop();
+        if (this.currentPath.length) {
+          const previousCell = this.currentPath.at(-1);
+          const { x, y, f, g, h, id } = previousCell;
+          this.setNewPosition(x, y, f, g, h, id);
+          this.nextCell = [];
+          this.next();
+        }
+      }
+
+      setNewPosition(x, y, f, g, h, id) {
+        this.x = x;
+        this.y = y;
+        this.f = f;
+        this.g = g;
+        this.h = h;
+        this.id = id;
+      }
+    };
+  }
+
   function createMazeDigger() {
     return class MazeDigger {
       constructor(x, y) {
@@ -153,6 +366,8 @@ function MazePath() {
         if (currentPath.length) {
           const { x, y } = currentPath.at(-1);
           dig(x, y);
+        } else {
+          mazeFinished = true;
         }
       }
 
@@ -242,10 +457,10 @@ function MazePath() {
 
     ctx.fillStyle = '#e9c46a';
     ctx.fillRect(
-      newStartX * width + 1,
-      newStartY * height + 1,
-      connectedWidth - 2,
-      connectedHeight - 2
+      newStartX * width + 2,
+      newStartY * height + 2,
+      connectedWidth - 4,
+      connectedHeight - 4
     );
   }
 
@@ -344,6 +559,22 @@ function MazePath() {
   }
 }
 let particleAnimationsParticleColour = '#e9c46a';
+let particleAnimationsText = 'Hello';
+let particleAnimationsParticleRadius = 2;
+
+const particleAnimationsSettingsForm = document.querySelector(
+  '.particle-animations-settings'
+);
+particleAnimationsSettingsForm[0].value = particleAnimationsParticleRadius;
+particleAnimationsSettingsForm[1].value = particleAnimationsParticleColour;
+particleAnimationsSettingsForm[2].value = particleAnimationsText;
+particleAnimationsSettingsForm.addEventListener('submit', (ev) => {
+  ev.preventDefault();
+  particleAnimationsParticleRadius = ev.target[0].value;
+  particleAnimationsParticleColour = ev.target[1].value;
+  particleAnimationsText = ev.target[2].value;
+  window['ParticleAnimations']();
+});
 
 function ParticleAnimations() {
   const contentDiv = document.querySelector('.text-particle-tab');
@@ -356,10 +587,10 @@ function ParticleAnimations() {
   // let randomParticlesList;
   // let amountOfParticles = 2000;
 
-  let particleColour = '#e9c46a';
-  let speedCoefficient = 0.05;
+  let particleColour = particleAnimationsParticleColour;
+  let speedCoefficient = 0.03;
 
-  let text = 'ABC';
+  let text = particleAnimationsText;
   let textWidth;
   let textParticlesList = [];
 
@@ -385,7 +616,7 @@ function ParticleAnimations() {
         this.originalX = x;
         this.originalY = y;
         this.setNewCoordinates(x, y);
-        this.radius = 2;
+        this.radius = particleAnimationsParticleRadius;
         this.weight = Math.floor(Math.random() * 3) + 1;
         this.distanceLimit = canvas.width / 10;
       }
@@ -485,7 +716,6 @@ function ParticleAnimations() {
   }
 
   function initTextParticles() {
-    console.log(textWidth);
     const rowLength = textWidth;
     const imageDataList = ctx.getImageData(0, 0, rowLength, rowLength).data;
     for (let i = 0; i < imageDataList.length; i++) {

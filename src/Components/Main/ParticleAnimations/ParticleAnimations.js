@@ -1,4 +1,20 @@
 let particleAnimationsParticleColour = '#e9c46a';
+let particleAnimationsText = 'Hello';
+let particleAnimationsParticleRadius = 2;
+
+const particleAnimationsSettingsForm = document.querySelector(
+  '.particle-animations-settings'
+);
+particleAnimationsSettingsForm[0].value = particleAnimationsParticleRadius;
+particleAnimationsSettingsForm[1].value = particleAnimationsParticleColour;
+particleAnimationsSettingsForm[2].value = particleAnimationsText;
+particleAnimationsSettingsForm.addEventListener('submit', (ev) => {
+  ev.preventDefault();
+  particleAnimationsParticleRadius = ev.target[0].value;
+  particleAnimationsParticleColour = ev.target[1].value;
+  particleAnimationsText = ev.target[2].value;
+  window['ParticleAnimations']();
+});
 
 function ParticleAnimations() {
   const contentDiv = document.querySelector('.text-particle-tab');
@@ -11,10 +27,10 @@ function ParticleAnimations() {
   // let randomParticlesList;
   // let amountOfParticles = 2000;
 
-  let particleColour = '#e9c46a';
-  let speedCoefficient = 0.05;
+  let particleColour = particleAnimationsParticleColour;
+  let speedCoefficient = 0.03;
 
-  let text = 'ABC';
+  let text = particleAnimationsText;
   let textWidth;
   let textParticlesList = [];
 
@@ -40,7 +56,7 @@ function ParticleAnimations() {
         this.originalX = x;
         this.originalY = y;
         this.setNewCoordinates(x, y);
-        this.radius = 2;
+        this.radius = particleAnimationsParticleRadius;
         this.weight = Math.floor(Math.random() * 3) + 1;
         this.distanceLimit = canvas.width / 10;
       }
@@ -140,7 +156,6 @@ function ParticleAnimations() {
   }
 
   function initTextParticles() {
-    console.log(textWidth);
     const rowLength = textWidth;
     const imageDataList = ctx.getImageData(0, 0, rowLength, rowLength).data;
     for (let i = 0; i < imageDataList.length; i++) {
