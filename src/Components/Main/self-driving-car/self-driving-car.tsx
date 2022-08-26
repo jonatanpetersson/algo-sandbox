@@ -24,13 +24,13 @@ export function SelfDrivingCar() {
     car.update(road.borders);
     canvas.height = canvas.parentElement?.clientHeight!;
 
-    // ctx.save();
+    ctx.save();
     ctx.translate(0, -car.y + canvas.height * 0.7);
 
     road.draw(ctx);
     car.draw(ctx);
 
-    // ctx.restore();
+    ctx.restore();
     requestAnimationFrame(animate);
   }
 

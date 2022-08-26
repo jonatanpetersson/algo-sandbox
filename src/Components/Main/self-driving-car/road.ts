@@ -1,4 +1,5 @@
-import { lerp } from './helpers';
+import { Point } from './types';
+import { lerp } from './utils';
 
 export class Road {
   x: number;
@@ -8,7 +9,7 @@ export class Road {
   right: number;
   top: number;
   bottom: number;
-  borders: { x: number; y: number }[][];
+  borders: Point[][];
   constructor(x: number, width: number, laneCount: number = 3) {
     this.x = x;
     this.width = width;

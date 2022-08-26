@@ -25,6 +25,11 @@ export function Navigation() {
             Self driving car
           </Link>
         </li>
+        <li>
+          <Link className="main-header-link" to="/fractal-trees">
+            Fractal trees
+          </Link>
+        </li>
       </ul>
     </nav>
   );

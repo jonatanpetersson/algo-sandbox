@@ -9,6 +9,7 @@ import { MazePath } from './Components/Main/MazePath/MazePath';
 import { ParticleAnimations } from './Components/Main/ParticleAnimations/ParticleAnimations';
 import { SelfDrivingCar } from './Components/Main/self-driving-car/self-driving-car';
 import './App.scss';
+import { FractalTrees } from './Components/Main/fractal-trees/fractal-trees';
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
           <Route path="/particle-animations" element={<ParticleAnimations />} />
           <Route path="/maze-path" element={<MazePath />} />
           <Route path="/self-driving-car" element={<SelfDrivingCar />} />
+          <Route path="/fractal-trees" element={<FractalTrees />} />
           {/* <Route path="/about" element={<About />} /> */}
         </Routes>
       </div>
