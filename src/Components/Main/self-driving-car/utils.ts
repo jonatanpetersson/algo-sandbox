@@ -1,4 +1,4 @@
-import { Point } from './types';
+import { Point } from '../../../shared/types';
 
 export function lerp(A: number, B: number, t: number) {
   return A + (B - A) * t;

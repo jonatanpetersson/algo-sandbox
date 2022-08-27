@@ -1,4 +1,4 @@
-import { Point } from './types';
+import { Point } from '../../../shared/types';
 import { lerp } from './utils';
 
 export class Road {

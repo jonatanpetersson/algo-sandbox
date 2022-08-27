@@ -1,3 +1,5 @@
+import { Route, Routes } from 'react-router-dom';
+import { CanvasTransformsSettings } from '../Main/canvas-transforms/canvas-transforms-settings';
 import './Footer.scss';
 
 export function Footer() {
@@ -9,6 +11,12 @@ export function Footer() {
         <GameOfLifeSettings />
         <ParticleAnimationsSettings />
         <MazePathSettings /> */}
+        <Routes>
+          <Route
+            path="/canvas-transforms"
+            element={<CanvasTransformsSettings />}
+          />
+        </Routes>
       </div>
     </footer>
   );

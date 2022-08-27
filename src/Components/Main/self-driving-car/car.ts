@@ -1,6 +1,6 @@
+import { Point } from '../../../shared/types';
 import { Controls } from './controls';
 import { Sensor } from './sensor';
-import { Point } from './types';
 
 export class Car {
   x: number;

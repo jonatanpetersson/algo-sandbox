@@ -1,5 +1,5 @@
+import { Point } from '../../../shared/types';
 import { Car } from './car';
-import { Point } from './types';
 import { getIntersection, lerp } from './utils';
 
 export class Sensor {

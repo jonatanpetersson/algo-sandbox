@@ -30,6 +30,11 @@ export function Navigation() {
             Fractal trees
           </Link>
         </li>
+        <li>
+          <Link className="main-header-link" to="/canvas-transforms">
+            Canvas transforms visualizer
+          </Link>
+        </li>
       </ul>
     </nav>
   );

@@ -1,8 +1,10 @@
 .main-header {
+  // flex: 1 1 9.6rem;
   min-height: 9.6rem;
   width: 100%;
 
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
 
@@ -32,7 +34,7 @@
   padding: 0 3.2rem;
 }
 
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 1080px) {
   .main-header-title {
     width: min-content;
     padding: 0 1.6rem;

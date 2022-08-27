@@ -11,7 +11,6 @@ export function Header() {
         </Link>
       </h1>
       <Navigation />
-      {/* <button className="main-header-about">About</button> */}
     </header>
   );
 }

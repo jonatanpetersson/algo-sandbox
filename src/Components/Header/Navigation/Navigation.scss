@@ -27,11 +27,17 @@
   font-weight: 500;
 }
 
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 1080px) {
+  .main-header-link {
+    font-size: 1.6rem;
+  }
+}
+@media only screen and (max-width: 720px) {
   .main-header-nav ul {
     flex-direction: column;
     gap: 0.8rem;
     padding: 1.6rem 0;
+    width: 100%;
   }
   .main-header-nav ul li {
     width: 100%;
