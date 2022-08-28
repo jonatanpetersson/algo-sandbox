@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { setSquareCanvas } from '../../../shared/functions';
 
 export function FractalTrees() {
   let canvas: HTMLCanvasElement;
@@ -51,12 +52,10 @@ export function FractalTrees() {
 
   function init() {
     canvas = document.querySelector('.fractal-trees-canvas')!;
-    canvas.width = canvas.parentElement?.clientWidth!;
-    canvas.height = canvas.parentElement?.clientHeight!;
+    setSquareCanvas(canvas);
     ctx = canvas.getContext('2d')!;
     window.addEventListener('resize', () => {
-      canvas.width = canvas.parentElement?.clientWidth!;
-      canvas.height = canvas.parentElement?.clientHeight!;
+      setSquareCanvas(canvas);
       draw();
     });
     canvas.addEventListener('click', (ev: any) => {

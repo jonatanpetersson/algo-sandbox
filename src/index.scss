@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Lato', sans-serif;
+  font-family: 'Open sans', sans-serif;
   border: none;
 }
 
@@ -17,5 +17,13 @@ body,
 
 #root {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+
+  background-color: #001219;
+}
+
+a,
+button {
+  all: unset;
+  cursor: pointer;
 }

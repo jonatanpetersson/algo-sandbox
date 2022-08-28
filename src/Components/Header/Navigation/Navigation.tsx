@@ -1,41 +1,41 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import './Navigation.scss';
+import { IconClose } from '../../../assets/icons/icon-close';
+import { IconMenu } from '../../../assets/icons/icon-menu';
+import { routes } from '../../../shared/routes';
+import './navigation.scss';
 
 export function Navigation() {
+  let nav: HTMLElement;
+  const openNav = () => nav.classList.add('open');
+  const closeNav = () => nav.classList.remove('open');
+
+  useEffect(() => {
+    nav = document.querySelector('.nav')!;
+  });
   return (
-    <nav className="main-header-nav">
-      <ul>
-        <li>
-          <Link className="main-header-link" to="/game-of-life">
-            Game of Life
-          </Link>
-        </li>
-        <li>
-          <Link className="main-header-link" to="/particle-animations">
-            Particle Animations
-          </Link>
-        </li>
-        <li>
-          <Link className="main-header-link" to="/maze-path">
-            Maze generation & Pathfinding
-          </Link>
-        </li>
-        <li>
-          <Link className="main-header-link" to="/self-driving-car">
-            Self driving car
-          </Link>
-        </li>
-        <li>
-          <Link className="main-header-link" to="/fractal-trees">
-            Fractal trees
-          </Link>
-        </li>
-        <li>
-          <Link className="main-header-link" to="/canvas-transforms">
-            Canvas transforms visualizer
-          </Link>
-        </li>
-      </ul>
-    </nav>
+    <>
+      <button className="open-nav" onClick={openNav}>
+        <IconMenu />
+      </button>
+      <nav className="nav">
+        <ul>
+          <li>
+            <button className="close-nav" onClick={closeNav}>
+              <IconClose />
+            </button>
+          </li>
+          {routes
+            .filter((r) => r.title !== 'Home')
+            .map((r) => (
+              <li key={r.title}>
+                <Link key={r.title} to={r.path} onClick={closeNav}>
+                  {r.title}
+                </Link>
+              </li>
+            ))}
+        </ul>
+      </nav>
+    </>
   );
 }

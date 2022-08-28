@@ -12,6 +12,8 @@ export function CanvasTransforms() {
   let mouse: Point;
   let cCenter: number;
 
+  console.log(UtilizeState());
+
   const [state, updateState] = UtilizeState();
   // Normalize / Restore pixel
   const n = (px: number) => px * (containerSize / canvasSize);

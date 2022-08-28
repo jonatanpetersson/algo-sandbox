@@ -1,32 +1,3 @@
-.main-footer {
-  // flex: 1 1 9.6rem;
-  min-height: 9.6rem;
-  width: 100%;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  background-color: #264653;
-
-  /* color: #2a9d8f; */
-  color: #48cebf;
-  font-size: 1.4rem;
-}
-
-.main-footer-title {
-  padding: 0 3.2rem;
-  font-size: 3.2rem;
-  font-weight: 300;
-  line-height: 3.2rem;
-}
-
-.main-footer-inner-wrapper {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-.settings-invisible {
-  display: none !important;
+.footer {
+  flex: 1;
 }

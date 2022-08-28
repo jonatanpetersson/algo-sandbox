@@ -1,4 +1,3 @@
-import { useContext } from 'react';
 import { UtilizeState } from '../../../shared/state';
 
 export function CanvasTransformsSettings() {
