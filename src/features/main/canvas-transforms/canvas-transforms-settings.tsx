@@ -8,9 +8,7 @@ export function CanvasTransformsSettings() {
   };
   return (
     <>
-      <h2 className="canvas-transforms-settings-title">
-        Canvas tranforms visualizer
-      </h2>
+      <h2 className="settings-title">Canvas tranforms visualizer</h2>
       <div className="canvas-transforms-settings-wrapper">
         <SettingsButton onClick={handleClick('translate')}>
           TRANSLATE

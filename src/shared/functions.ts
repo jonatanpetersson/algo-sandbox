@@ -16,3 +16,13 @@ export const unNormalizePixel = (
   containerSize: number,
   canvasSize: number
 ) => px * (canvasSize / containerSize);
+
+export function getClickedCellPosition(
+  canvas: HTMLCanvasElement,
+  event: MouseEvent
+) {
+  const rect = canvas.getBoundingClientRect();
+  const x = Math.floor(event.clientX - rect.left);
+  const y = Math.floor(event.clientY - rect.top);
+  return { x, y };
+}
