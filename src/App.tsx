@@ -1,9 +1,9 @@
 import { BrowserRouter as Router } from 'react-router-dom';
-import { Footer } from './components/footer/footer';
-import { Header } from './components/header/header';
+import { Footer } from './features/footer/footer';
+import { Header } from './features/header/header';
 import './app.scss';
-import { Main } from './components/main/main';
-import { initialState, StateProviderWrapper } from './shared/state';
+import { Main } from './features/main/main';
+import { StateProviderWrapper } from './shared/state';
 
 export default function App() {
   return (

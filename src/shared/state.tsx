@@ -14,7 +14,9 @@ const State = createContext({});
 export const StateProviderWrapper = (components: JSX.Element[]) => {
   const [state, setState] = useState(initialState);
   return (
-    <State.Provider value={[state, setState]}>{components}</State.Provider>
+    <State.Provider value={[state, setState]}>
+      {components.map((c, i) => ({ ...c, key: i }))}
+    </State.Provider>
   );
 };
 

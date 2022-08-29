@@ -12,3 +12,5 @@ export const IconConfig: SVGProps<SVGSVGElement> = {
   strokeLinecap: 'round',
   strokeLinejoin: 'round',
 };
+
+

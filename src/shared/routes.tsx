@@ -1,18 +1,24 @@
-import { CanvasTransforms } from '../components/main/canvas-transforms/canvas-transforms';
-import { CanvasTransformsSettings } from '../components/main/canvas-transforms/canvas-transforms-settings';
-import { FractalTrees } from '../components/main/fractal-trees/fractal-trees';
-import { GameOfLife } from '../components/main/game-of-life/game-of-life';
-import { GameOfLifeSettings } from '../components/main/game-of-life/game-of-life-settings';
-import { Home } from '../components/main/home/home';
-import { MazePath } from '../components/main/maze-path/maze-path';
-import { ParticleAnimations } from '../components/main/particle-animations/particle-animations';
-import { SelfDrivingCar } from '../components/main/self-driving-car/self-driving-car';
+import { CanvasTransforms } from '../features/main/canvas-transforms/canvas-transforms';
+import { CanvasTransformsSettings } from '../features/main/canvas-transforms/canvas-transforms-settings';
+import { FractalTrees } from '../features/main/fractal-trees/fractal-trees';
+import { FractalTreesSettings } from '../features/main/fractal-trees/fractal-trees-settings';
+import { GameOfLife } from '../features/main/game-of-life/game-of-life';
+import { GameOfLifeSettings } from '../features/main/game-of-life/game-of-life-settings';
+import { Home } from '../features/main/home/home';
+import { HomeSettings } from '../features/main/home/home-settings';
+import { MazePath } from '../features/main/maze-path/maze-path';
+import { MazePathSettings } from '../features/main/maze-path/maze-path-settings';
+import { ParticleEffects } from '../features/main/particle-effects/particle-effects';
+import { ParticleEffectsSettings } from '../features/main/particle-effects/particle-effects-settings';
+import { SelfDrivingCar } from '../features/main/self-driving-car/self-driving-car';
+import { SelfDrivingCarSettings } from '../features/main/self-driving-car/self-driving-car-settings';
 
 export const routes = [
   {
     path: '/',
     element: <Home />,
     title: 'Home',
+    settings: <HomeSettings />,
   },
   {
     path: '/game-of-life',
@@ -21,24 +27,28 @@ export const routes = [
     settings: <GameOfLifeSettings />,
   },
   {
-    path: '/particle-animations',
-    element: <ParticleAnimations />,
-    title: 'Particle Animations',
+    path: '/particle-effects',
+    element: <ParticleEffects />,
+    title: 'Particle Effects',
+    settings: <ParticleEffectsSettings />,
   },
   {
     path: '/maze-path',
     element: <MazePath />,
     title: 'Maze generation & Pathfinding',
+    settings: <MazePathSettings />,
   },
   {
     path: '/self-driving-car',
     element: <SelfDrivingCar />,
     title: 'Self driving car',
+    settings: <SelfDrivingCarSettings />,
   },
   {
     path: '/fractal-trees',
     element: <FractalTrees />,
     title: 'Fractal trees',
+    settings: <FractalTreesSettings />,
   },
   {
     path: '/canvas-transforms',

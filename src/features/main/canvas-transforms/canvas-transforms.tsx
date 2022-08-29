@@ -1,4 +1,9 @@
 import { useContext, useEffect } from 'react';
+import {
+  normalizePixel,
+  setSquareCanvas,
+  unNormalizePixel,
+} from '../../../shared/functions';
 import { UtilizeState } from '../../../shared/state';
 import { Point } from '../../../shared/types';
 import { degToRad, hypot, pointToRad, radToDeg } from '../../../shared/utils';
@@ -12,12 +17,10 @@ export function CanvasTransforms() {
   let mouse: Point;
   let cCenter: number;
 
-  console.log(UtilizeState());
-
-  const [state, updateState] = UtilizeState();
+  const [{ canvasTransforms }, updateState] = UtilizeState();
   // Normalize / Restore pixel
-  const n = (px: number) => px * (containerSize / canvasSize);
-  const un = (px: number) => px * (canvasSize / containerSize);
+  const n = (px: number) => normalizePixel(px, containerSize, canvasSize);
+  const un = (px: number) => unNormalizePixel(px, containerSize, canvasSize);
 
   function update() {}
 
@@ -26,9 +29,9 @@ export function CanvasTransforms() {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     if (mouse) {
-      translate(mouse.x, mouse.y);
-      // rotate(mouse.x, mouse.y);
-      // scale(mouse.x, mouse.y);
+      if (canvasTransforms.translate) translate(mouse.x, mouse.y);
+      if (canvasTransforms.rotate) rotate(mouse.x, mouse.y);
+      if (canvasTransforms.scale) scale(mouse.x, mouse.y);
     } else {
       drawGrid();
     }
@@ -86,11 +89,8 @@ export function CanvasTransforms() {
   }
 
   function setCanvasSize() {
-    const size = Math.min(
-      canvas.parentElement?.clientWidth!,
-      canvas.parentElement?.clientHeight!
-    );
-    containerSize = canvas.height = canvas.width = size;
+    const size = setSquareCanvas(canvas);
+    containerSize = size;
     cCenter = size / 2;
   }
 
@@ -101,13 +101,13 @@ export function CanvasTransforms() {
   }
 
   useEffect(() => {
+    console.log(canvasTransforms);
     init();
     animate();
-  }, []);
+  }, [canvasTransforms]);
 
   return (
     <>
-      {state.canvasTransforms.boolibooli ? <p>hellloooo</p> : ''}
       <canvas className="canvas-transforms-canvas"></canvas>
     </>
   );
