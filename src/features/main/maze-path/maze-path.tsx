@@ -12,8 +12,8 @@ export function MazePath() {
   }
 
   function setCanvasSize() {
-    canvas.width = canvas.parentElement?.clientWidth!;
-    canvas.height = canvas.parentElement?.clientHeight!;
+    canvas.width = canvas.parentElement!.clientWidth;
+    canvas.height = canvas.parentElement!.clientHeight;
   }
 
   function animate() {

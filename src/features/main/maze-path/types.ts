@@ -1,6 +1,6 @@
 import { Point } from '../../../shared/types';
 
-export interface Neighbours {
+export interface CellNeighbours {
   top: Point | false;
   right: Point | false;
   bottom: Point | false;
@@ -23,8 +23,8 @@ export interface Node {
 export interface AStarNode {
   x: number;
   y: number;
-  f: number;
-  g: number;
-  h: number;
-  id: string;
+  f?: number;
+  g?: number;
+  h?: number;
+  id?: string;
 }

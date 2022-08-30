@@ -5,7 +5,7 @@ import { Method } from './types';
 export function CanvasTransformsSettings() {
   const { state, updateState } = UtilizeState();
   const handleClick = (method: Method) => () => {
-    if (updateState) updateState({ ...state, method });
+    updateState({ ...state, method });
   };
   return (
     <>

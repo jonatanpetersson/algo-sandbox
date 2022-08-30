@@ -21,23 +21,23 @@ export function GameOfLifeSettings() {
   const [config, setConfig] = useState('');
   const handleConfig = (event: ChangeEvent<HTMLSelectElement>) => {
     setConfig(event.target.value);
-    delete state?.gameMode;
-    updateState?.({ ...state, config: event.target.value });
+    delete state.gameMode;
+    updateState({ ...state, config: event.target.value });
   };
 
   const play = () => {
-    updateState?.({
+    updateState({
       ...state,
       gameMode:
-        state?.gameMode !== GameMode.Play ? GameMode.Play : GameMode.Stop,
+        state.gameMode !== GameMode.Play ? GameMode.Play : GameMode.Stop,
     });
   };
   const reset = () => {
-    updateState?.({ ...state, gameMode: GameMode.Reset });
+    updateState({ ...state, gameMode: GameMode.Reset });
   };
   const submit = (ev: FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
-    updateState?.({
+    updateState({
       ...state,
       gridSize,
       populationRatio,
@@ -47,9 +47,9 @@ export function GameOfLifeSettings() {
   };
 
   useEffect(() => {
-    if (state?.gridSize) setGridSize(state?.gridSize);
-    if (state?.tickSpeed) setTickSpeed(state?.tickSpeed);
-    if (state?.populationRatio) setPopulationRatio(state?.populationRatio);
+    if (state.gridSize) setGridSize(state.gridSize);
+    if (state.tickSpeed) setTickSpeed(state.tickSpeed);
+    if (state.populationRatio) setPopulationRatio(state.populationRatio);
   }, [state]);
 
   return (
@@ -58,7 +58,7 @@ export function GameOfLifeSettings() {
       <form action="submit" className="gol-form" onSubmit={submit}>
         <div className="gol-buttons">
           <SettingsButton onClick={play}>
-            {!state?.play ? 'Play' : 'Paus'}
+            {state.play ? 'Play' : 'Paus'}
           </SettingsButton>
           <SettingsButton onClick={reset}>Reset</SettingsButton>
         </div>

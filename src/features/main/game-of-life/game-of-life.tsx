@@ -182,7 +182,7 @@ export function GameOfLife() {
     if (!state?.game) {
       const game = new GameOfLife();
       game.setupUI();
-      updateState?.({
+      updateState({
         ...state,
         game,
         gridSize: 50,

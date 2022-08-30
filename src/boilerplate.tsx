@@ -16,8 +16,8 @@ export function Boilerplate() {
   }
 
   function setCanvasSize() {
-    canvas.width = canvas.parentElement?.clientWidth!;
-    canvas.height = canvas.parentElement?.clientHeight!;
+    canvas.width = canvas.parentElement!.clientWidth!;
+    canvas.height = canvas.parentElement!.clientHeight!;
   }
 
   function animate() {

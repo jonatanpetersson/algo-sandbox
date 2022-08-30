@@ -17,12 +17,12 @@ interface StateModel2 {
 
 type SetStateModel = React.Dispatch<React.SetStateAction<StateModel>>;
 
-interface ContextModel {
-  state?: StateModel;
-  updateState?: SetStateModel;
+export interface ContextModel {
+  state: StateModel;
+  updateState: SetStateModel;
 }
 
-const State = createContext<ContextModel | undefined>(undefined);
+const State = createContext(initialState);
 
 export const StateProviderWrapper = (components: JSX.Element[]) => {
   const [state, updateState] = useState(initialState);
@@ -35,6 +35,5 @@ export const StateProviderWrapper = (components: JSX.Element[]) => {
 
 export const UtilizeState = (): ContextModel => {
   const context = useContext(State);
-  if (!context) throw Error('Context undefined!');
-  return context;
+  return context as ContextModel;
 };

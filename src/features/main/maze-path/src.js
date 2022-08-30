@@ -47,6 +47,7 @@ function MazePath() {
   animate();
   dig(0, 0);
 
+  // Moved to ts
   function addNodeRecursive(treeNode, nodeToAdd, nextSelectedNode) {
     if (isNode(treeNode, nodeToAdd) && !mazePathCancel) {
       return addNextNodeAsChildOnCurrentNode(treeNode, nextSelectedNode);
@@ -60,6 +61,7 @@ function MazePath() {
     }
   }
 
+  // Moved to ts
   function addNextNodeAsChildOnCurrentNode(currentNode, nextNode) {
     if (!currentNode.id) {
       currentNode.id = nodeId(currentNode.x, currentNode.y);
@@ -76,6 +78,7 @@ function MazePath() {
     };
   }
 
+  // Moved to ts
   function addNodeToTree(nodeToAdd, nextSelectedNode) {
     if (!nodeTree.length) {
       nodeTree = [addNextNodeAsChildOnCurrentNode(nodeToAdd, nextSelectedNode)];
@@ -106,6 +109,7 @@ function MazePath() {
     }
   }
 
+  // Moved to ts
   function createCell() {
     return class Cell {
       constructor(x, y, size) {
@@ -128,6 +132,7 @@ function MazePath() {
     };
   }
 
+  //Moved to ts
   function createAStar() {
     return class AStar {
       constructor(x, y) {
@@ -327,6 +332,7 @@ function MazePath() {
     };
   }
 
+  // Moved to ts
   function createMazeDigger() {
     return class MazeDigger {
       constructor(x, y) {
@@ -383,6 +389,7 @@ function MazePath() {
     };
   }
 
+  // Moved to ts
   function dig(x, y) {
     if (!digger) {
       digger = new MazeDigger(x, y);
@@ -414,6 +421,7 @@ function MazePath() {
     }
   }
 
+  // Moved to ts
   function drawConnection(startX, startY, endX, endY, cellSize) {
     const { width, height } = cellSize;
     let connectedWidth = width;
@@ -437,6 +445,7 @@ function MazePath() {
     );
   }
 
+  // Moved to ts
   function drawConnections(nodeChildren) {
     if (nodeChildren.length) {
       nodeChildren.forEach((node) => {
@@ -470,21 +479,25 @@ function MazePath() {
   //   ctx.fill();
   // }
 
+  // Moved to ts
   function getCell(x, y) {
     return grid[y * gridSize + x];
   }
 
+  // Moved to ts
   function getCellPosition(idx, gridSize) {
     const y = Math.floor(idx / gridSize);
     const x = idx - y * gridSize;
     return { x, y };
   }
 
+  // Moved to ts
   function resizeCanvas() {
     setCanvasSize();
     setCellSize();
   }
 
+  // Moved to ts
   function setCanvasSize() {
     const { clientWidth, clientHeight } = contentDiv;
     canvas.width = canvas.height =
@@ -493,6 +506,7 @@ function MazePath() {
     // canvas.height = contentDiv.clientHeight - 2;
   }
 
+  // Moved to ts
   function setCellNeighbours(x, y) {
     const neighbours = {
       top: { x: x, y: y - 1 },
@@ -517,6 +531,7 @@ function MazePath() {
     return neighbours;
   }
 
+  // Moved to ts
   function setCellSize() {
     cellSize = {
       width: canvas.width / gridSize,
