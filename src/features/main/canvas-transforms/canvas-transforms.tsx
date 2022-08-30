@@ -8,6 +8,7 @@ import { UtilizeState } from '../../../shared/state';
 import { Point } from '../../../shared/types';
 import { degToRad, hypot, pointToRad, radToDeg } from '../../../shared/utils';
 import './canvas-transforms.scss';
+import { Method } from './types';
 
 export function CanvasTransforms() {
   let canvas: HTMLCanvasElement;
@@ -29,9 +30,10 @@ export function CanvasTransforms() {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     if (mouse) {
-      if (state!.canvasTransforms!.translate) translate(mouse.x, mouse.y);
-      if (state!.canvasTransforms!.rotate) rotate(mouse.x, mouse.y);
-      if (state!.canvasTransforms!.scale) scale(mouse.x, mouse.y);
+      if (state!.method === Method.Translate) translate(mouse.x, mouse.y);
+      else if (state!.method === Method.Rotate) rotate(mouse.x, mouse.y);
+      else if (state!.method === Method.Scale) scale(mouse.x, mouse.y);
+      else drawGrid();
     } else {
       drawGrid();
     }
@@ -101,7 +103,6 @@ export function CanvasTransforms() {
   }
 
   useEffect(() => {
-    console.log(state);
     init();
     animate();
   }, [state]);

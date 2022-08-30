@@ -94,8 +94,12 @@ export function GameOfLife() {
         return;
       }
       const { x, y } = getClickedCellPosition(this.canvas!, event);
-      const initialCellsX = Math.floor(x / this.cellDimensions!);
-      const initialCellsY = Math.floor(y / this.cellDimensions!);
+      const configsCenterX = Math.floor(this.config[0].length / 2);
+      const configsCenterY = Math.floor(this.config.length / 2);
+      const initialCellsX =
+        Math.floor(x / this.cellDimensions!) - configsCenterX;
+      const initialCellsY =
+        Math.floor(y / this.cellDimensions!) - configsCenterY;
 
       this.config.forEach((row, rowY) => {
         row.forEach((cell, colX) => {
