@@ -11,7 +11,13 @@ import {
   MaxSpaceFiller189,
   Weekender,
 } from './configs';
-import { CellsArray, CellsDict, Config, ConfigSelected } from './types';
+import {
+  CellsArray,
+  CellsDict,
+  Config,
+  ConfigSelected,
+  GameMode,
+} from './types';
 import { useEffect } from 'react';
 import './game-of-life.scss';
 import {
@@ -21,8 +27,7 @@ import {
 import { UtilizeState } from '../../../shared/state';
 
 export function GameOfLife() {
-  const [state, updateState] = UtilizeState();
-  let game: GameOfLife;
+  const { state, updateState } = UtilizeState();
 
   class GameOfLife {
     rows?: number;
@@ -58,37 +63,11 @@ export function GameOfLife() {
         this.populationRatio
       );
       this.cellsDict = createCellsDict(this.cellsArray);
-      // drawCells(cellsArray);
-
-      // initialized = true;
-
-      // selectElements();
-      // addEventListeners();
-
-      // tickSpeedInput.value = tickSpeed + '';
-      // populationRatioInput.value = populationRatio + '';
-      // gridSizeInput.value = gridSize + '';
+      this.canvas.addEventListener('click', this.placeConfig.bind(this));
     }
 
-    // function selectElements() {
-    //   toggleButton = document.querySelector('.toggle-button')!;
-    //   resetButton = document.querySelector('.reset-button')!;
-    //   configSelect = document.querySelector('#config-select')!;
-    //   settingsForm = document.querySelector('.form')!;
-    //   tickSpeedInput = document.querySelector('#tick-speed')!;
-    //   populationRatioInput = document.querySelector('#population-ratio')!;
-    //   gridSizeInput = document.querySelector('#grid-size')!;
-    // }
-
-    // function addEventListeners() {
-    //   settingsForm.addEventListener('submit', setNewSettings);
-    //   configSelect.addEventListener('click', loadConfig);
-    //   resetButton.addEventListener('click', resetGame);
-    //   canvas.addEventListener('click', placeConfig);
-    // }
-
-    loadConfig() {
-      switch (state.configSelect.value) {
+    loadConfig(config: ConfigSelected) {
+      switch (config) {
         case ConfigSelected.Glider:
           this.config = Glider;
           break;
@@ -114,7 +93,7 @@ export function GameOfLife() {
       if (!this.config) {
         return;
       }
-      const { x, y } = this.getClickedCellPosition(this.canvas!, event);
+      const { x, y } = getClickedCellPosition(this.canvas!, event);
       const initialCellsX = Math.floor(x / this.cellDimensions!);
       const initialCellsY = Math.floor(y / this.cellDimensions!);
 
@@ -142,31 +121,6 @@ export function GameOfLife() {
       });
     }
 
-    getClickedCellPosition(canvas: HTMLCanvasElement, event: MouseEvent) {
-      return getClickedCellPosition(canvas, event);
-    }
-
-    // setNewSettings(ev: SubmitEvent) {
-    //   ev.preventDefault();
-    //   tickSpeed = Number(tickSpeedInput.value);
-    //   populationRatio = Number(populationRatioInput.value);
-    //   if (gridSize !== Number(gridSizeInput.value)) {
-    //     gridSize = Number(gridSizeInput.value);
-    //     cols = gridSize;
-    //     rows = gridSize;
-    //     cellDimensions = canvas.width / cols;
-    //   }
-    //   resetGame();
-    // }
-
-    // function toggleGame() {
-    //   if (state.) {
-    //     runGame();
-    //   } else {
-    //     stopGame();
-    //   }
-    // }
-
     runGame() {
       this.gameInterval = setInterval(() => {
         const { updatedCellsDict, updatedCellsArray } = updateCellsState(
@@ -175,8 +129,6 @@ export function GameOfLife() {
         );
         this.cellsArray = updatedCellsArray;
         this.cellsDict = updatedCellsDict;
-        // this.clearCanvas();
-        // this.drawCells(this.cellsArray);
       }, this.tickSpeed);
     }
 
@@ -187,9 +139,12 @@ export function GameOfLife() {
     resetGame() {
       clearInterval(this.gameInterval);
       this.clearCanvas();
+      this.cols = this.gridSize;
+      this.rows = this.gridSize;
+      this.cellDimensions = this.canvas!.width / this.cols;
       this.cellsArray = createCellsArray(
-        this.rows!,
-        this.cols!,
+        this.rows,
+        this.cols,
         this.populationRatio
       );
       this.cellsDict = createCellsDict(this.cellsArray);
@@ -214,22 +169,36 @@ export function GameOfLife() {
   }
 
   function animate() {
-    state.game.clearCanvas();
-    state.game.drawCells(state.game.cellsArray!);
+    state?.game.clearCanvas();
+    state?.game.drawCells(state.game.cellsArray!);
     requestAnimationFrame(animate);
   }
 
   useEffect(() => {
-    if (!state.game) {
+    if (!state?.game) {
       const game = new GameOfLife();
       game.setupUI();
-      updateState({ ...state, game });
+      updateState?.({
+        ...state,
+        game,
+        gridSize: 50,
+        tickSpeed: 150,
+        populationRatio: 0.1,
+        gameMode: GameMode.Reset,
+      });
     }
-    if (state.play === true) state.game.runGame();
-    if (state.play === false) state.game.stopGame();
-    if (state.reset === true) state.game.resetGame();
 
-    if (state.game?.cellsArray) animate();
+    if (state?.tickSpeed) state.game.tickSpeed = Number(state.tickSpeed);
+    if (state?.gridSize) state.game.gridSize = Number(state.gridSize);
+    if (state?.populationRatio)
+      state.game.populationRatio = Number(state.populationRatio);
+    if (state?.config) state.game.loadConfig(state.config);
+
+    if (state?.gameMode === GameMode.Play) state.game.runGame();
+    if (state?.gameMode === GameMode.Stop) state.game.stopGame();
+    if (state?.gameMode === GameMode.Reset) state.game.resetGame();
+
+    if (state?.game?.cellsArray) animate();
   }, [state]);
 
   return (

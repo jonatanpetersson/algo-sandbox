@@ -17,7 +17,7 @@ export function CanvasTransforms() {
   let mouse: Point;
   let cCenter: number;
 
-  const [{ canvasTransforms }, updateState] = UtilizeState();
+  const { state, updateState } = UtilizeState();
   // Normalize / Restore pixel
   const n = (px: number) => normalizePixel(px, containerSize, canvasSize);
   const un = (px: number) => unNormalizePixel(px, containerSize, canvasSize);
@@ -29,9 +29,9 @@ export function CanvasTransforms() {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     if (mouse) {
-      if (canvasTransforms.translate) translate(mouse.x, mouse.y);
-      if (canvasTransforms.rotate) rotate(mouse.x, mouse.y);
-      if (canvasTransforms.scale) scale(mouse.x, mouse.y);
+      if (state!.canvasTransforms!.translate) translate(mouse.x, mouse.y);
+      if (state!.canvasTransforms!.rotate) rotate(mouse.x, mouse.y);
+      if (state!.canvasTransforms!.scale) scale(mouse.x, mouse.y);
     } else {
       drawGrid();
     }
@@ -101,10 +101,10 @@ export function CanvasTransforms() {
   }
 
   useEffect(() => {
-    console.log(canvasTransforms);
+    console.log(state);
     init();
     animate();
-  }, [canvasTransforms]);
+  }, [state]);
 
   return (
     <>

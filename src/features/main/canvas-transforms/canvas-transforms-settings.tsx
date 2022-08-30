@@ -2,9 +2,10 @@ import { SettingsButton } from '../../../shared/components/settings-button/setti
 import { UtilizeState } from '../../../shared/state';
 
 export function CanvasTransformsSettings() {
-  const [state, updateState] = UtilizeState();
+  const { state, updateState } = UtilizeState();
   const handleClick = (method: 'translate' | 'rotate' | 'scale') => () => {
-    updateState({ ...state, canvasTransforms: { [method]: true } });
+    if (updateState)
+      updateState({ ...state, canvasTransforms: { [method]: true } });
   };
   return (
     <>

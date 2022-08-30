@@ -16,3 +16,9 @@ export enum ConfigSelected {
   Weekender = 'weekender',
   MaxSpaceFiller189 = 'max-spacefiller-189',
 }
+
+export enum GameMode {
+  Play,
+  Stop,
+  Reset,
+}

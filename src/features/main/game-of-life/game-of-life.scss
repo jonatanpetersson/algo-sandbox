@@ -3,11 +3,24 @@
   height: fit-content;
 }
 
-.settings-wrapper {
+.settings-title {
+  margin-bottom: 0.8rem;
+}
+.gol-form {
   width: 100%;
-  flex: 1;
-
+  height: min-content;
   display: flex;
-  justify-content: space-evenly;
-  align-items: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  .gol-buttons {
+    display: flex;
+    flex-direction: row;
+  }
+  .gol-group {
+    display: flex;
+    flex-direction: column;
+    label {
+      font-size: 1.4rem;
+    }
+  }
 }
