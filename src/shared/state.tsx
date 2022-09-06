@@ -37,3 +37,15 @@ export const UtilizeState = (): ContextModel => {
   const context = useContext(State);
   return context as ContextModel;
 };
+
+export const CreateLocalState = (initialState: {[key: string]: any}) => {
+  const [state, setState] = useState(initialState);
+  return (data?: {[key: string]: any}) => {
+    if (data) {
+      setState({...state, data})
+    } else {
+      return state
+    }
+  };
+}
+
