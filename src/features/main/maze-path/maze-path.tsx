@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { setSquareCanvas } from '../../../shared/functions';
 
 export function MazePath() {
   let canvas: HTMLCanvasElement;
@@ -7,13 +8,8 @@ export function MazePath() {
   function init() {
     canvas = document.querySelector('.maze-path-canvas')!;
     ctx = canvas.getContext('2d')!;
-    setCanvasSize();
-    window.addEventListener('resize', () => setCanvasSize());
-  }
-
-  function setCanvasSize() {
-    canvas.width = canvas.parentElement!.clientWidth;
-    canvas.height = canvas.parentElement!.clientHeight;
+    setSquareCanvas(canvas);
+    window.addEventListener('resize', () => setSquareCanvas(canvas));
   }
 
   function animate() {
