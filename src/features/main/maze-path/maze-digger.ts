@@ -18,6 +18,7 @@ export class MazeDigger {
     grid: Cell[],
     gridSize: number,
     nodeTree: Node[],
+    setNodeTree: any,
     digAll: boolean,
     digSpeed: number,
     mazePathCancel: boolean
@@ -33,6 +34,7 @@ export class MazeDigger {
         gridSize,
         currentPath,
         nodeTree,
+        setNodeTree,
         digAll,
         digSpeed,
         mazeFinished,

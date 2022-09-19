@@ -10,6 +10,7 @@ export function addNodeToTree(
   nodeToAdd: Node,
   nextSelectedNode: Node,
   nodeTree: Node[],
+  setNodeTree: any[],
   mazePathCancel: boolean
 ) {
   if (!nodeTree.length) {
@@ -35,6 +36,7 @@ export function dig(
   gridSize: number,
   currentPath: Point[],
   nodeTree: Node[],
+  setNodeTree: any,
   digAll: boolean,
   digSpeed: number,
   mazeFinished: boolean,
@@ -57,7 +59,7 @@ export function dig(
     const { node, possibleChildren, nextX, nextY } = nodeWithSelectedChild;
     const nextNode = { x: nextX, y: nextY };
     if (possibleChildren) {
-      addNodeToTree(node, nextNode, nodeTree, mazePathCancel);
+      addNodeToTree(node, nextNode, nodeTree, setNodeTree, mazePathCancel);
       if (digAll) {
         setTimeout(() => {
           dig(
@@ -68,6 +70,7 @@ export function dig(
             gridSize,
             currentPath,
             nodeTree,
+            setNodeTree,
             digAll,
             digSpeed,
             mazeFinished,
@@ -83,6 +86,7 @@ export function dig(
           grid,
           gridSize,
           nodeTree,
+          setNodeTree,
           digAll,
           digSpeed,
           mazePathCancel
